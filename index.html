@@ -32,7 +32,7 @@
   .mast .kick{font-family:var(--mono); font-size:11px; letter-spacing:0.22em; text-transform:uppercase; color:var(--accent-2); font-weight:500}
   .mast h1{font-size:31px; font-weight:700; margin:6px 0 4px; letter-spacing:-0.02em}
   .mast h1 .q{color:var(--accent-2)}
-  .mast p{margin:0; color:var(--muted); max-width:62ch; font-size:14.5px}
+  .mast p{margin:0; color:var(--muted); max-width:64ch; font-size:14.5px}
   .formula{font-family:var(--mono); font-size:13px; color:var(--ink); background:var(--surface);
     border:1px solid var(--line); border-radius:var(--r); padding:9px 13px; margin-top:14px; display:inline-block}
   .formula b{color:var(--accent-2); font-weight:600}
@@ -65,8 +65,16 @@
   input[type=number]::-webkit-outer-spin-button,
   input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none; margin:0}
   .row2{display:grid; grid-template-columns:1fr 1fr; gap:11px}
+  .row2.align-end{align-items:end}
+  .row2.align-end .field{margin-bottom:0}
+  .readout{font-family:var(--mono); font-size:14.5px; font-weight:600; color:var(--ink);
+    background:var(--surface-2); border:1px solid var(--line); border-radius:4px; padding:8px 10px}
+  select{width:100%; font-family:var(--mono); font-size:14px; color:var(--ink);
+    background:var(--surface-2); border:1px solid var(--line); border-radius:4px; padding:8px 10px;
+    outline:none; font-weight:500; cursor:pointer}
+  select:focus{border-color:var(--accent-2); box-shadow:0 0 0 3px rgba(44,108,196,.14); background:#fff}
   .row-name{display:grid; grid-template-columns:1fr 84px; gap:11px}
-  .row3{display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:9px}
+  .row3{display:grid; grid-template-columns:1fr 1fr 1fr; gap:9px}
 
   /* history grid */
   table.hist{width:100%; border-collapse:collapse; margin-top:2px}
@@ -81,6 +89,7 @@
   table.hist tbody td{padding:2px 3px}
   table.hist tbody input{padding:6px 6px; text-align:right; font-size:13px}
   .unit-note{font-size:11.5px; color:var(--faint); margin-top:9px; line-height:1.45}
+  .unit-note b{color:var(--muted); font-weight:600}
 
   /* k block */
   .kgrid{display:grid; grid-template-columns:1fr 1fr; gap:14px; align-items:end}
@@ -98,7 +107,7 @@
   .stockname .cmp{font-family:var(--mono); font-size:13px; color:var(--muted); font-weight:500; display:block; margin-top:2px}
   .zonechip{font-family:var(--mono); font-size:12px; font-weight:600; padding:5px 11px; border-radius:100px; color:#fff; white-space:nowrap}
 
-  .gauge{position:relative; margin:30px 0 8px}
+  .gauge{position:relative; margin:46px 0 8px}
   .gauge-track{display:flex; height:13px; border-radius:7px; overflow:hidden}
   .gauge-track > span{display:block}
   .seg-under{background:var(--z-under)} .seg-buy{background:var(--z-buy)}
@@ -120,11 +129,11 @@
   .gauge-legend i{width:9px; height:9px; border-radius:2px; display:inline-block}
 
   .fv-callout{display:flex; gap:0; margin-top:20px; border:1px solid var(--line); border-radius:var(--r); overflow:hidden}
-  .fv-callout > div{flex:1; padding:13px 15px; text-align:center}
+  .fv-callout > div{flex:1; padding:13px 15px; text-align:center; display:flex; flex-direction:column; justify-content:flex-end}
   .fv-callout > div + div{border-left:1px solid var(--line)}
   .fv-callout .lab{font-size:10.5px; font-family:var(--mono); letter-spacing:0.1em; text-transform:uppercase; color:var(--faint); margin-bottom:3px}
   .fv-callout .big{font-family:var(--mono); font-size:21px; font-weight:600}
-  .fv-callout .delta{font-family:var(--mono); font-size:13px; font-weight:600}
+  .fv-callout .delta{font-family:var(--mono); font-size:21px; font-weight:600}
 
   /* ---- metric tables ---- */
   .mtable{width:100%; border-collapse:collapse; margin-top:2px}
@@ -133,6 +142,7 @@
   .mtable td.k{color:var(--muted); font-weight:500}
   .mtable td.v{text-align:right; font-family:var(--mono); font-weight:600; color:var(--ink)}
   .mtable td .sub{color:var(--faint); font-weight:400; font-size:11.5px; display:block; margin-top:1px}
+  .mtable tr.em td.v{color:var(--accent-2)}
 
   /* GARP band table */
   .bands{width:100%; border-collapse:collapse; margin-top:4px; font-size:13px}
@@ -193,8 +203,8 @@
   <header class="mast">
     <div class="kick">Quality-adjusted GARP valuer</div>
     <h1><span class="q">q</span>PEG</h1>
-    <p>Adjusts a stock's PEG for the return it earns on capital, then places it on a Growth-At-Reasonable-Price scale. The quality exponent <i>k</i> is derived from reinvestment numbers.</p>
-    <div class="formula">qPEG = PEG × ( <b>h</b> ÷ ROIC )<sup><b>k</b></sup></div>
+    <p>Adjusts a stock's PEG for the return it earns on capital and how durably it reinvests, then places it on a Growth-At-Reasonable-Price scale. The exponent <i>α</i> is derived from the reinvestment rate and a moat-based fade period, not entered by hand.</p>
+    <div class="formula">qPEG = PEG × ( <b>h</b> ÷ ROIC )<sup><b>α</b></sup></div>
   </header>
 
   <div class="grid">
@@ -206,31 +216,31 @@
         <div class="row-name">
           <div class="field">
             <label for="name">Stock name</label>
-            <input type="text" id="name" value="Mastercard" autocomplete="off">
+            <input type="text" id="name" value="Example Co" autocomplete="off">
           </div>
           <div class="field">
             <label for="ccy">Currency</label>
-            <input type="text" id="ccy" value="$" maxlength="3" autocomplete="off">
+            <input type="text" id="ccy" value="₹" maxlength="3" autocomplete="off">
           </div>
         </div>
         <div class="row2">
           <div class="field">
             <label for="cmp">Current price (CMP)</label>
-            <input type="number" id="cmp" value="490" step="any">
+            <input type="number" id="cmp" value="2450" step="any">
           </div>
           <div class="field">
             <label for="dyield">Dividend yield <span class="hint">%</span></label>
-            <input type="number" id="dyield" value="0.71" step="any">
+            <input type="number" id="dyield" value="1.0" step="any">
           </div>
         </div>
         <div class="row3">
           <div class="field">
-            <label for="eps1">EPS — fwd yr 1</label>
-            <input type="number" id="eps1" value="19.68" step="any">
+            <label for="epsCur">EPS — current yr</label>
+            <input type="number" id="epsCur" value="100" step="any">
           </div>
           <div class="field">
-            <label for="eps3">EPS — fwd yr 3</label>
-            <input type="number" id="eps3" value="26.46" step="any">
+            <label for="epsFwd">EPS — fwd yr</label>
+            <input type="number" id="epsFwd" value="133.54" step="any">
           </div>
           <div class="field">
             <label for="years">Yrs apart</label>
@@ -241,20 +251,20 @@
 
       <div class="panel">
         <p class="eyebrow">Returns &amp; hurdle</p>
-        <div class="row2">
+        <div class="row2 align-end">
           <div class="field">
-            <label for="roce">ROCE <span class="hint">%</span></label>
-            <input type="number" id="roce" value="65" step="any">
+            <label for="roic">ROIC — current yr <span class="hint">%</span></label>
+            <input type="number" id="roic" value="19.91" step="any">
           </div>
           <div class="field">
             <label for="h">Hurdle h <span class="hint">% (cost of capital)</span></label>
-            <input type="number" id="h" value="8.5" step="any">
+            <input type="number" id="h" value="11.5" step="any">
           </div>
         </div>
       </div>
 
       <div class="panel">
-        <p class="eyebrow">Three-year history</p>
+        <p class="eyebrow">Three-year financials</p>
         <table class="hist">
           <thead>
             <tr>
@@ -265,58 +275,62 @@
             </tr>
           </thead>
           <tbody>
-            <tr><th>Net profit (PAT)</th>
-              <td><input type="number" class="pat" value="11.2" step="any"></td>
-              <td><input type="number" class="pat" value="12.87" step="any"></td>
-              <td><input type="number" class="pat" value="14.97" step="any"></td></tr>
-            <tr><th>Effective tax %</th>
-              <td><input type="number" class="tax" value="18" step="any"></td>
-              <td><input type="number" class="tax" value="15.6" step="any"></td>
-              <td><input type="number" class="tax" value="23.2" step="any"></td></tr>
-            <tr><th>Cash from ops</th>
-              <td><input type="number" class="cfo" value="11.7" step="any"></td>
-              <td><input type="number" class="cfo" value="14.75" step="any"></td>
-              <td><input type="number" class="cfo" value="17.4" step="any"></td></tr>
+            <tr><th>EBITDA</th>
+              <td><input type="number" class="ebitda" value="1060" step="any"></td>
+              <td><input type="number" class="ebitda" value="1150" step="any"></td>
+              <td><input type="number" class="ebitda" value="1250" step="any"></td></tr>
+            <tr><th>EBIT</th>
+              <td><input type="number" class="ebit" value="850" step="any"></td>
+              <td><input type="number" class="ebit" value="920" step="any"></td>
+              <td><input type="number" class="ebit" value="1000" step="any"></td></tr>
             <tr><th>Capex</th>
-              <td><input type="number" class="capex" value="1.1" step="any"></td>
-              <td><input type="number" class="capex" value="1.2" step="any"></td>
-              <td><input type="number" class="capex" value="1.22" step="any"></td></tr>
-            <tr><th>Deprec. &amp; amort.</th>
-              <td><input type="number" class="da" value="0.94" step="any"></td>
-              <td><input type="number" class="da" value="1.04" step="any"></td>
-              <td><input type="number" class="da" value="1.3" step="any"></td></tr>
-            <tr><th>Increase in WC</th>
-              <td><input type="number" class="wc" value="2.22" step="any"></td>
-              <td><input type="number" class="wc" value="1.07" step="any"></td>
-              <td><input type="number" class="wc" value="1.69" step="any"></td></tr>
-            <tr><th>Dividend payout %</th>
-              <td><input type="number" class="payout" value="19.3" step="any"></td>
-              <td><input type="number" class="payout" value="19" step="any"></td>
-              <td><input type="number" class="payout" value="18.4" step="any"></td></tr>
-            <tr><th>Acquisitions / inv.</th>
-              <td><input type="number" class="acq" value="0" step="any"></td>
-              <td><input type="number" class="acq" value="2.2" step="any"></td>
-              <td><input type="number" class="acq" value="0" step="any"></td></tr>
+              <td><input type="number" class="capex" value="660" step="any"></td>
+              <td><input type="number" class="capex" value="710" step="any"></td>
+              <td><input type="number" class="capex" value="770" step="any"></td></tr>
+            <tr><th>Change in WC</th>
+              <td><input type="number" class="wc" value="110" step="any"></td>
+              <td><input type="number" class="wc" value="120" step="any"></td>
+              <td><input type="number" class="wc" value="130" step="any"></td></tr>
+            <tr><th>ROIC %</th>
+              <td><input type="number" class="roicHist" value="18.6" step="any"></td>
+              <td><input type="number" class="roicHist" value="19.3" step="any"></td>
+              <td><input type="number" class="roicHist" value="19.91" step="any"></td></tr>
+            <tr><th>Tax rate %</th>
+              <td><input type="number" class="tax" value="24" step="any"></td>
+              <td><input type="number" class="tax" value="25" step="any"></td>
+              <td><input type="number" class="tax" value="25" step="any"></td></tr>
           </tbody>
         </table>
-        <p class="unit-note">Enter the cash-flow rows (PAT, ops, capex, D&amp;A, increase in WC, acquisitions) in any one consistent unit (millions, crores, billions, whatever), since they are used only as ratios. Tax and payout are percentages. Oldest year on the left. <b>Increase in WC</b> is the extra cash tied up in inventory and receivables as the business grows: positive when working capital rose, negative if it fell, and it is optional (leave at 0 for asset-light businesses). It is the working-capital line from the cash-flow statement with its sign flipped, so an outflow there is a positive number here.</p>
+        <p class="unit-note">Enter the cash rows (EBITDA, EBIT, capex, change in WC) in any one consistent unit, since they are used only as ratios. ROIC and tax are percentages, oldest year on the left. The reinvestment rate each year is <b>(capex + ΔWC + EBIT − EBITDA) ÷ (EBIT × (1 − tax))</b>, averaged over the three years; since <b>EBIT − EBITDA = −D&amp;A</b>, the numerator is net reinvestment and the denominator is NOPAT. <b>Change in WC</b> is the extra cash tied up as the business grows (negative if it fell). The three ROIC figures set the suggested T, so keep the latest one consistent with the headline ROIC above.</p>
       </div>
 
       <div class="panel">
-        <p class="eyebrow">Quality exponent k</p>
-        <div class="kgrid">
-          <div>
-            <div class="ksugg">
-              <div class="lab">Suggested</div>
-              <div class="val" id="ksuggVal">—</div>
-            </div>
-            <button class="reset" id="resetK" type="button">reset to suggested</button>
+        <p class="eyebrow">Moat, fade &amp; exponent</p>
+        <div class="field">
+          <label for="moat">Economic moat <span class="hint">sets the fade period T; "none" uses the 3-yr trend</span></label>
+          <select id="moat">
+            <option value="none" selected>None — use 3-yr ROIC trend</option>
+            <option value="nomoat">No moat</option>
+            <option value="cost">Cost advantage</option>
+            <option value="intangible">Brand / intangibles / licences</option>
+            <option value="switching">Switching costs</option>
+            <option value="scale">Efficient scale</option>
+            <option value="network">Network effect</option>
+          </select>
+        </div>
+        <div class="row2 align-end">
+          <div class="field">
+            <label for="Tused">Fade period T <span class="hint">yrs to hurdle</span></label>
+            <input type="number" id="Tused" value="7" step="1" min="1">
           </div>
-          <div class="field" style="margin:0">
-            <label for="kused">k used <span class="hint">(editable)</span></label>
-            <input type="number" id="kused" value="0.23" step="0.01" min="0" max="1.5">
+          <div class="field">
+            <label>Suggested T <span class="hint">· moat or trend</span></label>
+            <div class="readout" id="TsuggVal">—</div>
           </div>
         </div>
+        <button class="reset" id="resetT" type="button">reset T to suggested</button>
+        <div class="ksugg" style="margin-top:12px"><div class="lab">Exponent α</div><div class="val" id="expoVal">—</div></div>
+        <p class="unit-note">The excess return no longer stays flat: it fades linearly from today's level to the hurdle over T years, so the average return earned across the window is roughly half the current spread. Pick the moat that fits and it sets T (wider moat, longer fade); with <b>none</b> selected, T comes from the three-year ROIC trend as before. T stays editable, and reset re-applies the suggestion.</p>
       </div>
     </section>
 
@@ -374,13 +388,14 @@
       <div class="panel">
         <p class="eyebrow">Valuation</p>
         <table class="mtable">
-          <tr><td class="k">Forward P/E</td><td class="v" id="rPE">—</td></tr>
-          <tr><td class="k">EPS growth (CAGR)</td><td class="v" id="rG">—</td></tr>
+          <tr><td class="k">P/E <span class="sub">CMP ÷ current-yr EPS</span></td><td class="v" id="rPE">—</td></tr>
+          <tr><td class="k">EPS growth (CAGR) <span class="sub">drives the PEG</span></td><td class="v" id="rG">—</td></tr>
+          <tr><td class="k">Reinvestment-supported growth <span class="sub">RR × ROIC · feeds α</span></td><td class="v" id="rGReinv">—</td></tr>
           <tr><td class="k">Raw PEG</td><td class="v" id="rPEG">—</td></tr>
-          <tr><td class="k">qPEG <span class="sub">quality-adjusted</span></td><td class="v" id="rQPEG">—</td></tr>
-          <tr><td class="k">qPEG incl. dividend <span class="sub">PEGY basis · drives verdict</span></td><td class="v" id="rQPEGY">—</td></tr>
-          <tr><td class="k">Post-tax ROIC <span class="sub">ROCE × (1 − avg tax)</span></td><td class="v" id="rROIC">—</td></tr>
-          <tr><td class="k">k used</td><td class="v" id="rK">—</td></tr>
+          <tr class="em"><td class="k">qPEG <span class="sub">quality-adjusted</span></td><td class="v" id="rQPEG">—</td></tr>
+          <tr class="em"><td class="k">qPEG incl. dividend <span class="sub">PEGY basis · drives verdict</span></td><td class="v" id="rQPEGY">—</td></tr>
+          <tr><td class="k">ROIC <span class="sub">current yr</span></td><td class="v" id="rROIC">—</td></tr>
+          <tr><td class="k">Reinvestment rate <span class="sub">3-yr average</span></td><td class="v" id="rRR">—</td></tr>
         </table>
       </div>
 
@@ -393,15 +408,15 @@
       </div>
 
       <div class="panel">
-        <p class="eyebrow">Why this k — reinvestment reality</p>
+        <p class="eyebrow">How is α derived</p>
         <table class="mtable">
-          <tr><td class="k">Idealised k <span class="sub">g ÷ (ROIC − g), value-driver anchor</span></td><td class="v" id="dKi">—</td></tr>
-          <tr><td class="k">Implied reinvestment b <span class="sub">g ÷ ROIC</span></td><td class="v" id="dB">—</td></tr>
-          <tr><td class="k">Actual retention <span class="sub">1 − payout</span></td><td class="v" id="dRet">—</td></tr>
-          <tr><td class="k">Organic net reinvestment <span class="sub">(capex − D&amp;A + ΔWC) ÷ PAT</span></td><td class="v" id="dOrg">—</td></tr>
-          <tr><td class="k">Reinvestment incl. M&amp;A <span class="sub">(capex − D&amp;A + ΔWC + acquisitions) ÷ PAT</span></td><td class="v" id="dMA">—</td></tr>
-          <tr><td class="k">Free-cash conversion <span class="sub">(ops − capex) ÷ PAT</span></td><td class="v" id="dFCF">—</td></tr>
-          <tr><td class="k">Reinvestment-funded growth <span class="sub">retention × ROIC</span></td><td class="v" id="dRfg">—</td></tr>
+          <tr><td class="k">Moat <span class="sub">sets T basis</span></td><td class="v" id="dMoat">—</td></tr>
+          <tr><td class="k">Fade period T <span class="sub">used</span></td><td class="v" id="dT">—</td></tr>
+          <tr><td class="k">Suggested T <span class="sub">moat or 3-yr trend</span></td><td class="v" id="dTsugg">—</td></tr>
+          <tr><td class="k">Capital-base growth <span class="sub">RR × ROIC</span></td><td class="v" id="dGrowth">—</td></tr>
+          <tr><td class="k">Faded excess-return PV <span class="sub">spread decays to hurdle over T</span></td><td class="v" id="dPVF">—</td></tr>
+          <tr class="em"><td class="k">Exponent α <span class="sub">applied to (h ÷ ROIC)</span></td><td class="v" id="dExpo">—</td></tr>
+          <tr><td class="k">EPS vs reinvestment growth <span class="sub">consistency check</span></td><td class="v" id="dDiverge">—</td></tr>
         </table>
         <p class="notes" id="kNote"></p>
       </div>
@@ -420,10 +435,10 @@
       <details class="about">
         <summary>About this model</summary>
         <div class="body">
-          <p><b>The idea.</b> A plain PEG treats all growth as equal. But growth costs capital, and ROIC tells you the price. qPEG discounts the PEG for the excess return a business earns over its hurdle: <code>qPEG = PEG × (h/ROIC)^k</code>. Below ~1.0 is reasonably priced; above ~1.25 is expensive.</p>
-          <p><b>Post-tax ROIC.</b> The hurdle is the cost of capital, so the return is put on the same basis: <code>ROIC = ROCE × (1 − average effective tax)</code>. ROCE comes from your screener; the tax rate is averaged over the three years entered.</p>
-          <p><b>The exponent k</b> controls how much credit the high return earns. The idealised value-driver anchor is <code>k = g/(ROIC − g)</code>, but that assumes the firm reinvests at ROIC forever. The tool scales it by how much of the implied reinvestment is actually deployed (from your cash flows, with acquisitions weighted at 50% since acquired returns usually trail organic ones), then caps it at linear. <b>k is the one judgemental input</b> — the suggested value is a defensible starting point; override it for durability or fade.</p>
-          <p><b>Fair value</b> is the price at the midpoint of the fair band (qPEG 1.0–1.25). Everything is a screening lens on the numbers you enter — not investment advice. Cyclical businesses, where ROCE and growth swing, need their inputs normalised to mid-cycle first.</p>
+          <p><b>The idea.</b> A plain PEG treats all growth as equal. But growth costs capital, and ROIC tells you the price. qPEG discounts the PEG for the excess return a business earns over its hurdle: <code>qPEG = PEG × (h/ROIC)^α</code>. Below ~1.0 is reasonably priced; above ~1.25 is expensive.</p>
+          <p><b>ROIC and reinvestment.</b> ROIC is entered directly. The reinvestment rate is computed per year as <code>(capex + ΔWC + EBIT − EBITDA) ÷ (EBIT × (1 − tax))</code> and averaged over three years. <code>EBIT − EBITDA</code> is just minus depreciation, so the numerator is net reinvestment and the denominator is NOPAT.</p>
+          <p><b>The exponent α is derived, not guessed.</b> The excess return is not held flat: over a fade period T it declines linearly from today's level to the hurdle, while the capital base compounds at <code>RR × ROIC</code>. The model values that fading economic profit and turns it into the exponent <code>α</code> applied to (h/ROIC). T is set by the moat you select, or by the three-year ROIC trend when none is chosen, and stays editable.</p>
+          <p><b>Fair value</b> is the price at the midpoint of the fair band (qPEG 1.0–1.25) on the dividend-inclusive (PEGY) basis. Everything is a screening lens on the numbers you enter, not investment advice. Cyclical businesses need their inputs normalised to mid-cycle first, and three years is a thin basis for estimating a long moat.</p>
         </div>
       </details>
 
@@ -438,14 +453,20 @@
   "use strict";
   var $ = function(id){ return document.getElementById(id); };
   var num = function(el){ var v = parseFloat(el.value); return isFinite(v) ? v : NaN; };
-  var arr = function(cls){ return Array.prototype.map.call(document.querySelectorAll('.'+cls), num); };
   var sum = function(a){ return a.reduce(function(s,x){ return s+x; },0); };
   var clamp = function(x,lo,hi){ return Math.max(lo,Math.min(hi,x)); };
+
+  // ---- suggested-T heuristic bounds (editable) ----
+  var T_FLOOR = 3, T_STABLE = 7, T_CAP = 15;
+  // moat type -> fade period T (years for the excess return to fade to the hurdle)
+  var MOAT_T = {nomoat:3, cost:6, intangible:9, switching:11, scale:13, network:15};
+  var MOAT_LABEL = {none:'None (3-yr trend)', nomoat:'No moat', cost:'Cost advantage',
+    intangible:'Brand / intangibles', switching:'Switching costs', scale:'Efficient scale', network:'Network effect'};
 
   var ZONES = [
     {name:'Undervalued',  lo:-Infinity, hi:0.75, cls:'z-under', col:'var(--z-under)'},
     {name:'GARP buy',     lo:0.75,      hi:1.00, cls:'z-buy',   col:'var(--z-buy)'},
-    {name:'Fair / reasonable', lo:1.00, hi:1.25, cls:'z-fair',  col:'var(--z-fair)'},
+    {name:'Fair', lo:1.00, hi:1.25, cls:'z-fair',  col:'var(--z-fair)'},
     {name:'Expensive',    lo:1.25,      hi:Infinity, cls:'z-exp', col:'var(--z-exp)'}
   ];
   function zoneOf(q){ for(var i=0;i<ZONES.length;i++){ if(q < ZONES[i].hi) return ZONES[i]; } return ZONES[3]; }
@@ -455,88 +476,143 @@
   function money(x){ if(!isFinite(x)) return '—'; return ccySym()+x.toLocaleString('en-US',{maximumFractionDigits:0}); }
   function pct(x,d){ if(!isFinite(x)) return '—'; return fmt(x,d===undefined?1:d)+'%'; }
 
+  function histArr(cls, dflt){
+    return Array.prototype.map.call(document.querySelectorAll('.'+cls), function(e){
+      var v=parseFloat(e.value); return isFinite(v)?v:(dflt===undefined?NaN:dflt);
+    });
+  }
+
+  // suggested fade period: from the chosen moat, else from the 3-year ROIC trend
+  function suggestT(roicHist, hPct, moat){
+    if(moat && MOAT_T[moat]!==undefined) return MOAT_T[moat];
+    if(roicHist.length<2 || !roicHist.every(isFinite) || !isFinite(hPct)) return NaN;
+    var latest=roicHist[roicHist.length-1], oldest=roicHist[0], n=roicHist.length-1;
+    var slope=(latest-oldest)/n;          // avg annual change in ROIC, %/yr
+    var spread=latest-hPct;               // current excess over hurdle
+    var T;
+    if(spread<=0) T=T_FLOOR;              // no current excess return
+    else if(slope>=0) T=T_STABLE;        // flat or rising: ordinary fade, no moat claimed
+    else T=spread/(-slope);              // falling: years until ROIC reaches the hurdle
+    return clamp(Math.round(T), T_FLOOR, T_CAP);
+  }
+
+  // derive k from the competitive-advantage-period model
+  function deriveK(roicD, hD, RR, T){
+    var out={gReinvD:NaN, r:NaN, pvf:NaN, Mq:NaN, expo:NaN, k:NaN};
+    if(![roicD,hD,RR,T].every(isFinite) || T<1) return out;
+    var gR = RR*roicD;                              // capital-base growth = reinvestment x ROIC
+    out.gReinvD = gR;
+    var r = (1+gR)/(1+hD);
+    out.r = r;
+    // PV of the excess return as it fades linearly from full strength to the hurdle over T years
+    var Tn = Math.max(1, Math.round(T));
+    var pvf = 0;
+    for(var t=1; t<=Tn; t++){
+      var w = 1 - (t-1)/Tn;                         // fade weight: 1 in yr 1, ~0 by yr T
+      pvf += w * Math.pow(1+gR, t-1) / Math.pow(1+hD, t);
+    }
+    out.pvf = pvf;
+    var Mq = 1 + (roicD-hD)*pvf;                    // fair multiple uplift from quality
+    if(!isFinite(Mq)) Mq = 1;
+    Mq = Math.max(Mq, 0.05);                        // floor keeps the log defined for value-destroyers
+    out.Mq = Mq;
+    var lnRatio = Math.log(roicD/hD);
+    if(Math.abs(roicD-hD)<1e-9 || !isFinite(lnRatio) || Math.abs(lnRatio)<1e-9){
+      out.expo=0; out.k=0; out.Mq=1;               // exactly at the hurdle: no adjustment
+    } else {
+      out.expo = Math.log(out.Mq)/lnRatio;         // = k x RR, the exponent actually applied
+      out.k = (Math.abs(RR)>1e-9) ? out.expo/RR : Infinity;
+    }
+    return out;
+  }
+
   function compute(){
-    var cmp=num($('cmp')), eps1=num($('eps1')), eps3=num($('eps3')), years=num($('years'));
-    var roce=num($('roce')), dyield=num($('dyield')), h=num($('h'));
-    var pat=arr('pat'), tax=arr('tax'), cfo=arr('cfo'), capex=arr('capex'),
-        da=arr('da'), payout=arr('payout'), acq=arr('acq');
-    var wc=Array.prototype.map.call(document.querySelectorAll('.wc'),function(e){var v=parseFloat(e.value);return isFinite(v)?v:0;});
+    var cmp=num($('cmp')), epsCur=num($('epsCur')), epsFwd=num($('epsFwd')), years=num($('years'));
+    var roic=num($('roic')), dyield=num($('dyield')), h=num($('h')), Tused=num($('Tused'));
+    var moat=$('moat').value;
+    var ebitda=histArr('ebitda'), ebit=histArr('ebit'),
+        capex=histArr('capex'), tax=histArr('tax'), roicHist=histArr('roicHist');
+    var wc=histArr('wc',0);   // change in working capital is optional
 
-    var ok = [cmp,eps1,eps3,years,roce,dyield,h].every(isFinite) &&
-             pat.every(isFinite) && tax.every(isFinite) && cfo.every(isFinite) &&
-             capex.every(isFinite) && da.every(isFinite) && payout.every(isFinite) && acq.every(isFinite) &&
-             eps1>0 && years>0 && roce>0;
+    // per-year reinvestment rate (fraction), then 3-year average
+    // (capex + dWC + EBIT - EBITDA) / (EBIT x (1 - tax)); EBIT - EBITDA = -D&A
+    var rrYears = ebit.map(function(e,i){
+      var denom = e*(1-tax[i]/100);
+      var nume  = capex[i]+wc[i]+ebit[i]-ebitda[i];
+      return (isFinite(denom)&&denom!==0) ? nume/denom : NaN;
+    });
+    var rrValid = rrYears.filter(isFinite);
+    var RR = rrValid.length ? sum(rrValid)/rrValid.length : NaN;
 
-    var avgTax = sum(tax)/tax.length;
-    var roicPt = roce*(1-avgTax/100);
-    var gp = (Math.pow(eps3/eps1, 1/years) - 1)*100;
-    var pe = cmp/eps1;
-    var rawPeg = pe/gp;
-    var rawPegy = pe/(gp+dyield);
+    var ok = [cmp,epsCur,epsFwd,years,roic,dyield,h,Tused].every(isFinite) &&
+             ebitda.every(isFinite) && ebit.every(isFinite) &&
+             capex.every(isFinite) && tax.every(isFinite) &&
+             isFinite(RR) && epsCur>0 && years>0 && roic>0 && Tused>0;
 
-    // idealised k & reinvestment reality
-    var kIdeal = (roicPt-gp>0) ? gp/(roicPt-gp) : Infinity;
-    var kIdealCap = (!isFinite(kIdeal) || kIdeal<0) ? 1.0 : Math.min(kIdeal,1.0);
-    var impliedB = gp/roicPt;                       // fraction
-    var totPat = sum(pat);
-    var orgReinvest = sum(capex)-sum(da)+sum(wc);   // net capex + increase in working capital
-    var totAcq = sum(acq);
-    var impliedAmt = impliedB*totPat;
-    var deployedW = orgReinvest + 0.5*totAcq;       // M&A weighted 50%
-    var R = impliedAmt>0 ? clamp(deployedW/impliedAmt,0,1) : 0;
-    var kSugg = clamp(kIdealCap*R, 0.2, 1.0);
+    var gp = (Math.pow(epsFwd/epsCur, 1/years) - 1)*100;   // EPS CAGR, %
+    var pe = cmp/epsCur;                                    // P/E on current-yr EPS
+    var rawPeg = pe/gp, rawPegy = pe/(gp+dyield);
+    var gReinvPct = RR*roic;                                // RR(fraction) x ROIC(%) = %
 
-    var retention = 1 - (sum(payout)/payout.length)/100;
-    var organic = orgReinvest/totPat;
-    var reinvMA = (orgReinvest+totAcq)/totPat;
-    var fcfConv = (sum(cfo)-sum(capex))/totPat;
-    var reinvFundedG = retention*roicPt;
-
-    var k = num($('kused'));
-    var M = Math.pow(h/roicPt, k);
+    var roicD = roic/100, hD = h/100;
+    var dk = deriveK(roicD, hD, RR, Tused);
+    var M = Math.pow(hD/roicD, dk.expo);                    // = 1 / Mq
     var qpeg = rawPeg*M, qpegy = rawPegy*M;
-    var gy = gp + dyield;                                 // total return = growth + dividend yield
-    var priceAtY = function(q){ return q*gy*eps1/M; };    // verdict & bands run on the dividend-inclusive (PEGY) basis
+    var gy = gp + dyield;                                   // total return = growth + yield
+    var priceAtY = function(q){ return q*gy*epsCur/M; };    // verdict & bands on the PEGY basis
     var avgFair = priceAtY(1.125);
 
-    return {ok:ok, name:$('name').value, cmp:cmp, eps1:eps1, gp:gp, pe:pe,
-      rawPeg:rawPeg, rawPegy:rawPegy, roicPt:roicPt, avgTax:avgTax,
-      kIdeal:kIdeal, kSugg:kSugg, k:k, M:M, qpeg:qpeg, qpegy:qpegy,
-      impliedB:impliedB, retention:retention, organic:organic, reinvMA:reinvMA,
-      fcfConv:fcfConv, reinvFundedG:reinvFundedG, priceAtY:priceAtY, avgFair:avgFair,
+    var Tsugg = suggestT(roicHist, h, moat);
+
+    return {ok:ok, moat:moat, name:$('name').value, cmp:cmp, epsCur:epsCur, gp:gp, pe:pe,
+      rawPeg:rawPeg, rawPegy:rawPegy, roic:roic, h:h, RR:RR, rrYears:rrYears,
+      gReinvPct:gReinvPct, Tused:Tused, Tsugg:Tsugg,
+      r:dk.r, pvf:dk.pvf, Mq:dk.Mq, expo:dk.expo, k:dk.k, M:M,
+      qpeg:qpeg, qpegy:qpegy, dyield:dyield, priceAtY:priceAtY, avgFair:avgFair,
       labels:[$('y0').value,$('y1').value,$('y2').value]};
   }
 
   function buildKNote(r){
     if(!r.ok) return '';
     var parts=[];
-    if(!isFinite(r.kIdeal) || r.kIdeal>5){
-      parts.push('Growth ('+pct(r.gp)+') sits almost on top of ROIC ('+pct(r.roicPt)+'), so the idealised k blows up — the single-stage model is on its singularity here and the raw anchor is meaningless.');
+    if(r.roic <= r.h){
+      parts.push('ROIC ('+pct(r.roic)+') is at or below the hurdle ('+pct(r.h)+'), so reinvestment is not creating value: the quality factor turns into a penalty and qPEG sits above the raw PEG.');
     }
-    if(r.organic < 0.10){
-      parts.push('Organic net reinvestment is only '+pct(r.organic)+' of profit, and free-cash conversion is '+pct(r.fcfConv)+' — this is a capital-light business whose growth is largely not reinvestment-driven, so the high return is credited modestly to avoid double-counting growth already in the PEG.');
+    var div = r.gReinvPct - r.gp;
+    if(Math.abs(div) >= 3){
+      if(div>0){
+        parts.push('Reinvestment supports ~'+pct(r.gReinvPct)+' growth (RR × ROIC) against the '+pct(r.gp)+' EPS forecast, so the capital base is being built faster than EPS shows. Check the gap is real reinvestment, not a delayed payoff.');
+      } else {
+        parts.push('EPS is forecast to grow '+pct(r.gp)+' but reinvestment only supports ~'+pct(r.gReinvPct)+' (RR × ROIC), so part of the EPS growth is not reinvestment-funded and the quality credit is muted by design.');
+      }
     }
-    if(r.reinvFundedG < r.gp-2){
-      parts.push('Reinvestment-funded growth is ~'+pct(r.reinvFundedG)+' against a '+pct(r.gp)+' forecast, confirming a chunk of growth is capital-free operating leverage.');
+    if(r.moat==='none'){
+      parts.push('No moat is selected, so T comes from the three-year ROIC trend, which is a thin basis. Picking the moat that fits the business usually gives a more defensible fade period.');
+    }
+    if(r.RR > 0.8){
+      parts.push('Reinvestment is very high (~'+pct(r.RR*100)+'), so qPEG stays sensitive to T even after the fade. The moat call is doing most of the work here.');
     }
     if(parts.length===0){
-      parts.push('Reinvestment broadly matches what the growth rate implies, so the value-driver credit is largely applicable.');
+      parts.push('The excess return is faded to the hurdle over T, and reinvestment broadly matches the growth the EPS forecast implies, so the credit is reasonable at the chosen horizon.');
     }
     return parts.join(' ');
   }
 
   function render(){
     var r = compute();
-    $('ksuggVal').textContent = r.ok ? fmt(r.kSugg,2) : '—';
+    $('TsuggVal').textContent = isFinite(r.Tsugg) ? fmt(r.Tsugg,0)+' yr' : '—';
+    $('expoVal').textContent = (r.ok && isFinite(r.expo)) ? fmt(r.expo,2) : '—';
 
     if(!r.ok){
-      ['rPE','rG','rPEG','rQPEG','rQPEGY','rROIC','rK','rFair','rCmp2','rDelta','rNameTxt','rCmp','rZone','qlab','dKi','dB','dRet','dOrg','dMA','dFCF','dRfg']
+      ['rPE','rG','rGReinv','rPEG','rQPEG','rQPEGY','rROIC','rRR','rFair','rCmp2','rDelta',
+       'rCmp','rZone','qlab','dMoat','dT','dTsugg','dGrowth','dPVF','dExpo','dDiverge']
         .forEach(function(id){ var e=$(id); if(e) e.textContent='—'; });
       $('rNameTxt').textContent = r.name || '—';
       $('bandBody').innerHTML='';
       $('kNote').textContent='Fill in every field to see the result.';
       $('marker').style.left='50%';
       $('rZone').style.background='var(--faint)';
+      window.__qpeg=r;
       return;
     }
 
@@ -560,11 +636,12 @@
 
     $('rPE').textContent = fmt(r.pe,1)+'×';
     $('rG').textContent = pct(r.gp);
+    $('rGReinv').textContent = pct(r.gReinvPct);
     $('rPEG').textContent = fmt(r.rawPeg,2);
     $('rQPEG').textContent = fmt(r.qpeg,2);
     $('rQPEGY').textContent = fmt(r.qpegy,2);
-    $('rROIC').textContent = pct(r.roicPt);
-    $('rK').textContent = fmt(r.k,2);
+    $('rROIC').textContent = pct(r.roic);
+    $('rRR').textContent = pct(r.RR*100);
 
     // bands
     var rows='';
@@ -581,13 +658,13 @@
     $('bandBody').innerHTML = rows;
 
     // diagnostics
-    $('dKi').textContent = (!isFinite(r.kIdeal)||r.kIdeal>50)? '∞ (g ≈ ROIC)' : fmt(r.kIdeal,2);
-    $('dB').textContent = pct(r.impliedB*100);
-    $('dRet').textContent = pct(r.retention*100);
-    $('dOrg').textContent = pct(r.organic*100);
-    $('dMA').textContent = pct(r.reinvMA*100);
-    $('dFCF').textContent = pct(r.fcfConv*100);
-    $('dRfg').textContent = pct(r.reinvFundedG);
+    $('dMoat').textContent = MOAT_LABEL[r.moat] || r.moat;
+    $('dT').textContent = fmt(r.Tused,0)+' yr';
+    $('dTsugg').textContent = isFinite(r.Tsugg) ? fmt(r.Tsugg,0)+' yr' : '—';
+    $('dGrowth').textContent = pct(r.gReinvPct);
+    $('dPVF').textContent = fmt(r.pvf,2);
+    $('dExpo').textContent = fmt(r.expo,2);
+    $('dDiverge').textContent = pct(r.gp)+' vs '+pct(r.gReinvPct);
     $('kNote').textContent = buildKNote(r);
 
     window.__qpeg = r; // for export
@@ -597,15 +674,16 @@
   function reportHtml(r){
     var z = zoneOf(r.qpegy);
     var when = new Date().toLocaleDateString('en-IN',{year:'numeric',month:'short',day:'numeric'});
+    var col = function(c){ return c.replace('var(--z-under)','#0E7C5A').replace('var(--z-buy)','#5DA24E').replace('var(--z-fair)','#D29A36').replace('var(--z-exp)','#C24E38'); };
     var bandRows = ZONES.map(function(zn){
       var loP=(zn.lo===-Infinity)?null:r.priceAtY(zn.lo), hiP=(zn.hi===Infinity)?null:r.priceAtY(zn.hi);
       var qtxt=(zn.lo===-Infinity?'< 0.75':zn.hi===Infinity?'> 1.25':zn.lo.toFixed(2)+'–'+zn.hi.toFixed(2));
       var ptxt=(zn.lo===-Infinity)?('< '+money(hiP)):(zn.hi===Infinity)?('> '+money(loP)):(money(loP)+' – '+money(hiP));
       var act=(r.qpegy<zn.hi&&r.qpegy>=zn.lo);
-      return '<tr style="'+(act?'background:#f2f5f8;font-weight:700':'')+'"><td style="padding:6px 10px;border-top:1px solid #ddd"><span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:'+zn.col.replace('var(--z-under)','#0E7C5A').replace('var(--z-buy)','#5DA24E').replace('var(--z-fair)','#D29A36').replace('var(--z-exp)','#C24E38')+';margin-right:7px"></span>'+zn.name+'</td><td style="padding:6px 10px;border-top:1px solid #ddd;font-family:monospace">'+qtxt+'</td><td style="padding:6px 10px;border-top:1px solid #ddd;font-family:monospace;text-align:right">'+ptxt+(act?'  ◀ now':'')+'</td></tr>';
+      return '<tr style="'+(act?'background:#f2f5f8;font-weight:700':'')+'"><td style="padding:6px 10px;border-top:1px solid #ddd"><span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:'+col(zn.col)+';margin-right:7px"></span>'+zn.name+'</td><td style="padding:6px 10px;border-top:1px solid #ddd;font-family:monospace">'+qtxt+'</td><td style="padding:6px 10px;border-top:1px solid #ddd;font-family:monospace;text-align:right">'+ptxt+(act?'  ◀ now':'')+'</td></tr>';
     }).join('');
     var delta=(r.cmp/r.avgFair-1)*100;
-    var zcol=z.col.replace('var(--z-under)','#0E7C5A').replace('var(--z-buy)','#5DA24E').replace('var(--z-fair)','#D29A36').replace('var(--z-exp)','#C24E38');
+    var zcol=col(z.col);
     var row=function(k,v,s){ return '<tr><td style="padding:6px 0;border-bottom:1px solid #e6e6e6;color:#566">'+k+(s?' <span style="color:#99a;font-size:11px">'+s+'</span>':'')+'</td><td style="padding:6px 0;border-bottom:1px solid #e6e6e6;text-align:right;font-family:monospace;font-weight:600">'+v+'</td></tr>'; };
     return '<!DOCTYPE html><html><head><meta charset="utf-8"><title>'+r.name+' — qPEG report</title>'+
       '<style>body{font-family:-apple-system,Segoe UI,Roboto,sans-serif;color:#10202E;max-width:720px;margin:30px auto;padding:0 22px;line-height:1.5}'+
@@ -620,22 +698,24 @@
       '<div><div class="l">Current price</div><div class="b">'+money(r.cmp)+'</div></div>'+
       '<div><div class="l">Over / under</div><div class="b" style="color:'+(delta>=0?'#C24E38':'#0E7C5A')+'">'+(delta>=0?'+':'')+delta.toFixed(1)+'%</div></div></div>'+
       '<h2>Valuation</h2><table>'+
-      row('Forward P/E', r.pe.toFixed(1)+'×')+row('EPS growth (CAGR)', r.gp.toFixed(1)+'%')+
+      row('P/E', r.pe.toFixed(1)+'×','CMP ÷ current-yr EPS')+row('EPS growth (CAGR)', r.gp.toFixed(1)+'%')+
+      row('Reinvestment-supported growth', r.gReinvPct.toFixed(1)+'%','RR × ROIC')+
       row('Raw PEG', r.rawPeg.toFixed(2))+row('qPEG', r.qpeg.toFixed(2),'quality-adjusted')+
       row('qPEG incl. dividend', r.qpegy.toFixed(2),'PEGY basis')+
-      row('Post-tax ROIC', r.roicPt.toFixed(1)+'%','ROCE × (1 − avg tax)')+row('k used', r.k.toFixed(2))+
+      row('ROIC', r.roic.toFixed(1)+'%','current yr')+
+      row('Reinvestment rate', (r.RR*100).toFixed(1)+'%','3-yr average')+
       '</table>'+
       '<h2>GARP price bands</h2><table><tr><th style="text-align:left;font-size:10px;text-transform:uppercase;color:#99a;padding-bottom:5px">Zone</th><th style="text-align:left;font-size:10px;text-transform:uppercase;color:#99a">qPEG +div</th><th style="text-align:right;font-size:10px;text-transform:uppercase;color:#99a">Price range</th></tr>'+bandRows+'</table>'+
-      '<h2>Why this k — reinvestment reality</h2><table>'+
-      row('Idealised k', (!isFinite(r.kIdeal)||r.kIdeal>50)?'∞ (g ≈ ROIC)':r.kIdeal.toFixed(2),'g ÷ (ROIC − g)')+
-      row('Implied reinvestment b', (r.impliedB*100).toFixed(1)+'%','g ÷ ROIC')+
-      row('Actual retention', (r.retention*100).toFixed(1)+'%','1 − payout')+
-      row('Organic net reinvestment', (r.organic*100).toFixed(1)+'%','(capex − D&A + ΔWC) ÷ PAT')+
-      row('Reinvestment incl. M&A', (r.reinvMA*100).toFixed(1)+'%','(capex − D&A + ΔWC + acquisitions) ÷ PAT')+
-      row('Free-cash conversion', (r.fcfConv*100).toFixed(1)+'%','(ops − capex) ÷ PAT')+
-      row('Reinvestment-funded growth', r.reinvFundedG.toFixed(1)+'%','retention × ROIC')+
+      '<h2>How is α derived</h2><table>'+
+      row('Moat', (MOAT_LABEL[r.moat]||r.moat),'sets T basis')+
+      row('Fade period T', r.Tused.toFixed(0)+' yr','used')+
+      row('Suggested T', (isFinite(r.Tsugg)?r.Tsugg.toFixed(0)+' yr':'—'),'moat or 3-yr trend')+
+      row('Capital-base growth', r.gReinvPct.toFixed(1)+'%','RR × ROIC')+
+      row('Faded excess-return PV', r.pvf.toFixed(2),'spread decays to hurdle over T')+
+      row('Exponent α', r.expo.toFixed(2),'applied to (h ÷ ROIC)')+
+      row('EPS vs reinvestment growth', r.gp.toFixed(1)+'% vs '+r.gReinvPct.toFixed(1)+'%','consistency check')+
       '</table><p class="note">'+buildKNote(r)+'</p>'+
-      '<p class="note">qPEG = PEG × (h/ROIC)^k. A screening lens on the inputs entered — not investment advice. Cyclical businesses need inputs normalised to mid-cycle first.</p>'+
+      '<p class="note">qPEG = PEG × (h/ROIC)^α. A screening lens on the inputs entered, not investment advice. Cyclical businesses need inputs normalised to mid-cycle first.</p>'+
       '<div class="foot">Generated by the qPEG valuer</div></body></html>';
   }
 
@@ -650,9 +730,9 @@
   function slug(s){ return (s||'stock').trim().replace(/[^\w-]+/g,'_').replace(/^_+|_+$/g,'') || 'stock'; }
 
   // ---------- inputs <-> JSON ----------
-  var TEXT_IDS=['name','ccy','y0','y1','y2'];
-  var NUM_IDS=['cmp','dyield','eps1','eps3','years','roce','h','kused'];
-  var ARR_CLS=['pat','tax','cfo','capex','da','wc','payout','acq'];
+  var TEXT_IDS=['name','ccy','y0','y1','y2','moat'];
+  var NUM_IDS=['cmp','dyield','epsCur','epsFwd','years','roic','h','Tused'];
+  var ARR_CLS=['ebitda','ebit','capex','wc','roicHist','tax'];
   function gather(){
     var o={};
     TEXT_IDS.concat(NUM_IDS).forEach(function(id){ o[id]=$(id).value; });
@@ -671,15 +751,19 @@
   document.addEventListener('input', function(e){
     if(e.target && e.target.tagName==='INPUT') render();
   });
-  $('resetK').addEventListener('click', function(){
-    var r=compute(); if(r.ok){ $('kused').value=r.kSugg.toFixed(2); render(); }
+  $('resetT').addEventListener('click', function(){
+    var r=compute(); if(isFinite(r.Tsugg)){ $('Tused').value=r.Tsugg; render(); }
+  });
+  $('moat').addEventListener('change', function(){
+    var r=compute(); if(isFinite(r.Tsugg)){ $('Tused').value=r.Tsugg; } render();
   });
   $('clearAll').addEventListener('click', function(){
     if(!confirm('Clear inputs? Currency and the FY column labels are kept.')) return;
-    ['name','cmp','dyield','eps1','eps3','roce','h'].forEach(function(id){ $(id).value=''; });
+    ['name','cmp','dyield','epsCur','epsFwd','roic','h'].forEach(function(id){ $(id).value=''; });
     Array.prototype.forEach.call(document.querySelectorAll('table.hist tbody input'), function(el){ el.value=''; });
     $('years').value='2';
-    $('kused').value='0.4';
+    $('moat').value='none';
+    $('Tused').value='7';
     render();
     $('name').focus();
   });
