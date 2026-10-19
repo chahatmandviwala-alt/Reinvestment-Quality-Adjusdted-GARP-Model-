@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>qPEG — quality-adjusted GARP valuer</title>
+<title>qPEG — Valuer & Stock Library</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -195,6 +195,68 @@
     .gauge-marker{transition:none}
   }
   @media(prefers-reduced-motion:reduce){ *{transition:none !important} }
+
+  /* ---- stock library upgrade ---- */
+  [hidden]{display:none!important}
+  .app-tabs{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:-5px 0 24px}
+  .app-tab{border:1px solid var(--line);border-radius:5px;background:#fff;padding:10px 17px;font:600 13px var(--disp);color:var(--muted);cursor:pointer}
+  .app-tab.active{background:var(--accent);border-color:var(--accent);color:#fff}
+  .modechip{margin-left:auto;font:600 11px var(--mono);color:var(--accent);border:1px solid var(--line);background:#fff;padding:7px 10px;border-radius:5px}
+  .library-launch{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;margin-bottom:18px}
+  .library-launch label{font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .launchrow{display:flex;gap:9px;margin-top:8px;align-items:center;flex-wrap:wrap}
+  .launchrow input{flex:1;min-width:180px}
+  .quick-results{margin-top:8px;border:1px solid var(--line);border-radius:5px;overflow:hidden}
+  .quick-results button{display:flex;align-items:center;justify-content:space-between;gap:12px;border:0;border-bottom:1px solid var(--line);background:#fff;width:100%;text-align:left;padding:10px 12px;color:var(--ink);cursor:pointer}
+  .quick-results button:last-child{border-bottom:0}
+  .quick-results button:hover{background:var(--surface-2)}
+  .quick-results .small{color:var(--faint);font:500 11px var(--mono)}
+  .muted-copy{color:var(--muted);font-size:13px}
+  .save-message{min-height:21px;font:500 12px var(--mono);color:var(--muted);margin:10px 0 0}
+  .save-message.dirty{color:var(--bad)}
+  .section-head{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:0 0 16px}
+  .section-head h2{font-size:23px;margin:0;line-height:1.2}
+  .section-head p{font-size:13px;color:var(--muted);margin:4px 0 0}
+  .libstats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:16px}
+  .stat{background:var(--surface);border:1px solid var(--line);padding:14px;border-radius:var(--r)}
+  .stat .k{font:500 10.5px var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.07em}
+  .stat .v{font:700 25px var(--mono);margin-top:4px}
+  .library-controls{display:flex;gap:9px;align-items:end;flex-wrap:wrap;padding:16px;background:#fff;border:1px solid var(--line);border-radius:var(--r) var(--r) 0 0}
+  .library-controls .field{margin:0;flex:1;min-width:175px}
+  .library-controls select{min-width:150px}
+  .tablewrap{overflow:auto;background:#fff;border:1px solid var(--line);border-top:none;border-radius:0 0 var(--r) var(--r)}
+  .stocktable{width:100%;border-collapse:collapse;white-space:nowrap}
+  .stocktable th{font:600 10px var(--mono);color:var(--faint);text-align:left;letter-spacing:.05em;text-transform:uppercase;padding:13px 12px;background:var(--surface-2)}
+  .stocktable td{padding:13px 12px;border-top:1px solid var(--line);font:500 12px var(--mono)}
+  .stocktable td:first-child{font:600 13px var(--disp);white-space:normal;min-width:145px}
+  .stocktable tr:hover td{background:#fafbfd}
+  .stocktable .numeric{text-align:right}
+  .stocktable .tools{text-align:right;min-width:125px}
+  .mini-btn{background:transparent;border:1px solid var(--line);border-radius:4px;padding:5px 8px;font:600 11px var(--disp);color:var(--accent);cursor:pointer;margin-left:5px}
+  .mini-btn:hover{border-color:var(--accent-2);background:var(--surface-2)}
+  .mini-btn.danger{color:var(--bad)}
+  .pillzone{font:600 10px var(--mono);border-radius:3px;padding:3px 6px;display:inline-block;background:var(--surface-2)}
+  .libtools{background:#fff;border:1px solid var(--line);padding:16px 18px;margin-top:16px;border-radius:var(--r)}
+  .libtools h3{margin:0 0 6px;font-size:14px}
+  .libtools .actions{margin-top:10px}
+  .empty-row{text-align:center!important;color:var(--muted);padding:36px 12px!important;font-family:var(--disp)!important}
+  .setup-cols{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .stepnum{display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:var(--accent);color:#fff;font:600 12px var(--mono);width:23px;height:23px;margin-right:8px}
+  .setup-list{padding-left:20px;color:var(--muted);font-size:13px;line-height:1.75}
+  .setup-list li{padding-bottom:7px}
+  .setup-list b{color:var(--ink)}
+  .setup-list code{font:500 11px var(--mono);background:var(--surface-2);padding:1px 4px}
+  .setup-buttons{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .cloud-state{font:500 12px var(--mono);margin-top:11px;color:var(--muted);overflow-wrap:anywhere}
+  .cloud-state.error{color:var(--bad)}
+  .cloud-state.success{color:var(--good)}
+  .cloud-auth{margin-top:15px;border-top:1px solid var(--line);padding-top:15px}
+  .cloud-auth .field{margin-bottom:11px}
+  .cloud-auth input[type=password], .cloud-config input[type=password]{width:100%;font:500 13px var(--mono);color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:4px;padding:8px 10px}
+  .cloud-note{padding:12px 14px;background:var(--surface-2);font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:5px;line-height:1.6;margin-top:14px}
+  @media(max-width:800px){.libstats{grid-template-columns:repeat(2,1fr)}.setup-cols{grid-template-columns:1fr}}
+  @media(max-width:520px){.app-tab{padding:9px 11px}.modechip{margin-left:0}.libstats{gap:8px}.stat{padding:11px}.stat .v{font-size:21px}}
+  @media print{.app-tabs,.library-launch,#viewLibrary,#viewCloud,.save-message{display:none!important}#viewValuer{display:block!important}}
 </style>
 </head>
 <body>
@@ -207,6 +269,23 @@
     <div class="formula">qPEG = PEG × ( <b>h</b> ÷ ROIC )<sup><b>α</b></sup></div>
   </header>
 
+  <nav class="app-tabs" aria-label="Main navigation">
+    <button class="app-tab active" type="button" data-view="valuer">Valuer</button>
+    <button class="app-tab" type="button" data-view="library">Stock library <span id="navCount"></span></button>
+    <button class="app-tab" type="button" data-view="cloud">Cloud setup</button>
+    <span class="modechip" id="modeLabel">LOCAL LIBRARY</span>
+  </nav>
+
+  <div id="viewValuer" class="appview">
+    <section class="library-launch" aria-label="Stock search">
+      <label for="quickFind">Open an existing stock</label>
+      <div class="launchrow">
+        <input type="text" id="quickFind" placeholder="Search your library by company name…" autocomplete="off">
+        <button class="btn ghost" id="quickBrowse" type="button">Browse all</button>
+      </div>
+      <div class="quick-results" id="quickResults" hidden></div>
+      <p class="save-message" id="saveMessage">Save a company to your stock library to access it again later.</p>
+    </section>
   <div class="grid">
 
     <!-- ================= INPUTS ================= -->
@@ -424,10 +503,11 @@
       <div class="panel">
         <p class="eyebrow">Export</p>
         <div class="actions">
-          <button class="btn" id="dlReport" type="button">Download</button>
-          <button class="btn ghost" id="saveJson" type="button">Save</button>
-          <button class="btn ghost" id="loadJsonBtn" type="button">Load</button>
-          <button class="btn ghost" id="clearAll" type="button">Clear</button>
+          <button class="btn" id="saveStock" type="button">Save to library</button>
+          <button class="btn ghost" id="dlReport" type="button">Download report</button>
+          <button class="btn ghost" id="saveJson" type="button">Export stock JSON</button>
+          <button class="btn ghost" id="loadJsonBtn" type="button">Load stock JSON</button>
+          <button class="btn ghost" id="clearAll" type="button">New / clear</button>
           <input type="file" id="loadJson" class="filein" accept="application/json">
         </div>
       </div>
@@ -444,8 +524,77 @@
 
     </section>
   </div>
+  </div><!-- /viewValuer -->
 
-  <footer class="foot">qPEG valuer · runs entirely in your browser · no data leaves this page</footer>
+  <section id="viewLibrary" class="appview" hidden>
+    <div class="section-head">
+      <div><h2>Stock library</h2><p>Search, compare, open and manage all your saved valuations.</p></div>
+      <button class="btn" id="libNew" type="button">+ New stock</button>
+    </div>
+    <div class="libstats">
+      <div class="stat"><div class="k">Saved stocks</div><div class="v" id="statCount">0</div></div>
+      <div class="stat"><div class="k">Undervalued</div><div class="v" id="statUnder">0</div></div>
+      <div class="stat"><div class="k">GARP buys</div><div class="v" id="statBuy">0</div></div>
+      <div class="stat"><div class="k">Fair / expensive</div><div class="v" id="statOther">0</div></div>
+    </div>
+    <div class="library-controls">
+      <div class="field"><label for="libSearch">Find a stock</label><input id="libSearch" type="text" placeholder="Search stock name…" autocomplete="off"></div>
+      <div class="field"><label for="libFilter">Valuation zone</label><select id="libFilter"><option value="all">All zones</option><option value="Undervalued">Undervalued</option><option value="GARP buy">GARP buy</option><option value="Fair">Fair</option><option value="Expensive">Expensive</option><option value="incomplete">Incomplete</option></select></div>
+      <div class="field"><label for="libSort">Sort by</label><select id="libSort"><option value="name">Name A–Z</option><option value="newest">Recently updated</option><option value="qpeg">Lowest qPEG first</option><option value="upside">Highest upside first</option></select></div>
+    </div>
+    <div class="tablewrap"><table class="stocktable" aria-label="Saved stocks"><thead><tr><th>Stock</th><th class="numeric">Price</th><th class="numeric">Fair value</th><th class="numeric">Upside</th><th class="numeric">qPEG +div</th><th>Zone</th><th>Updated</th><th class="tools">Actions</th></tr></thead><tbody id="stockRows"></tbody></table></div>
+    <div class="libtools">
+      <h3>Import, backup &amp; transfer</h3>
+      <div class="muted-copy">Import one or more existing single-stock JSON files, or a previously exported full-library backup. Stocks with matching names are updated. Export the whole collection as one JSON backup.</div>
+      <div class="actions">
+        <button class="btn" id="importLibraryBtn" type="button">Import JSON files</button>
+        <button class="btn ghost" id="exportLibraryBtn" type="button">Export full library</button>
+        <button class="btn ghost" id="refreshCloudBtn" type="button" hidden>Refresh from cloud</button>
+        <input class="filein" id="libraryImportInput" type="file" accept=".json,application/json" multiple>
+      </div>
+      <p class="save-message" id="libraryMessage" role="status"></p>
+    </div>
+  </section>
+
+  <section id="viewCloud" class="appview" hidden>
+    <div class="section-head"><div><h2>Cloud database setup</h2><p>Keep GitHub Pages as your website; store stock records securely in Supabase.</p></div></div>
+    <div class="setup-cols">
+      <div class="panel">
+        <p class="eyebrow">Connect your project</p>
+        <div class="cloud-config">
+          <div class="field"><label for="sbUrl">Supabase project URL</label><input id="sbUrl" type="text" placeholder="https://your-project.supabase.co" autocomplete="off"></div>
+          <div class="field"><label for="sbKey">Supabase publishable key (or legacy anon key)</label><input id="sbKey" type="text" placeholder="sb_publishable_…" autocomplete="off"></div>
+          <button id="sbConnect" class="btn" type="button">Connect project</button>
+        </div>
+        <div class="cloud-auth" id="sbSignedOut">
+          <p class="muted-copy">Sign in to your private stock database, or create a new account. Your password is never saved by this HTML tool.</p>
+          <div class="field"><label for="sbEmail">Email</label><input id="sbEmail" type="text" autocomplete="username" placeholder="you@example.com"></div>
+          <div class="field"><label for="sbPassword">Password</label><input id="sbPassword" type="password" autocomplete="current-password" placeholder="Password"></div>
+          <div class="setup-buttons"><button class="btn" type="button" id="sbSignIn">Sign in</button><button class="btn ghost" type="button" id="sbSignUp">Create account</button></div>
+        </div>
+        <div class="cloud-auth" id="sbSignedIn" hidden>
+          <p class="muted-copy">Signed in as <b id="sbUser"></b>. Saves and imports go directly to this account's cloud library.</p>
+          <div class="setup-buttons"><button class="btn" type="button" id="sbUseCloud">Use cloud library</button><button class="btn ghost" type="button" id="sbCopyLocal">Copy local stocks to cloud</button><button class="btn ghost" type="button" id="sbUseLocal">Use local library</button><button class="btn ghost" type="button" id="sbSignOut">Sign out</button></div>
+        </div>
+        <p id="sbStatus" class="cloud-state" role="status">Not connected. Local mode works without a cloud account.</p>
+        <div class="cloud-note">Only use a <b>publishable</b> or <b>anon</b> key here, never a Supabase <b>secret</b> or <b>service_role</b> key. Your table must have the row-level security (RLS) policies supplied in the SQL setup file.</div>
+      </div>
+      <div class="panel">
+        <p class="eyebrow">One-time setup</p>
+        <ol class="setup-list">
+          <li>Create a project at <b>Supabase</b> and open its <b>SQL Editor</b>.</li>
+          <li>Run the contents of the accompanying <b>qPEG_supabase_setup.sql</b> file to create a private <code>qpeg_stocks</code> table.</li>
+          <li>Copy the project URL and <b>publishable</b> key from the Supabase project settings into the fields on the left.</li>
+          <li>Connect and create your account or sign in. Confirm your email if Supabase requests it.</li>
+          <li>Click <b>Copy local stocks to cloud</b> to upload existing stocks, including the sample Caplin Point Labs record.</li>
+          <li>Deploy this HTML file to GitHub Pages. The cloud library will be available wherever you sign in.</li>
+        </ol>
+        <div class="cloud-note">The browser remembers the project URL and public key and lets Supabase manage your sign-in session. Local and cloud libraries remain separate until you explicitly copy or import stocks.</div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">qPEG valuer &amp; stock library · local stocks stay in this browser · cloud stocks are stored in your Supabase project when connected</footer>
 </div>
 
 <script>
@@ -671,6 +820,7 @@
   }
 
   // ---------- export: standalone HTML report ----------
+  function escapeHtml(s){ return String(s).replace(/[&<>\"']/g, function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c];}); }
   function reportHtml(r){
     var z = zoneOf(r.qpegy);
     var when = new Date().toLocaleDateString('en-IN',{year:'numeric',month:'short',day:'numeric'});
@@ -692,7 +842,7 @@
       'table{width:100%;border-collapse:collapse;font-size:14px}.chip{display:inline-block;color:#fff;font-family:monospace;font-size:12px;font-weight:600;padding:4px 11px;border-radius:100px;background:'+zcol+'}'+
       '.fv{display:flex;border:1px solid #ddd;border-radius:6px;overflow:hidden;margin:14px 0}.fv>div{flex:1;text-align:center;padding:12px}.fv>div+div{border-left:1px solid #ddd}.fv .l{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#99a;font-family:monospace}.fv .b{font-family:monospace;font-size:20px;font-weight:600}'+
       '.note{font-size:12px;color:#99a;margin-top:10px;line-height:1.6}.foot{margin-top:26px;border-top:1px solid #e6e6e6;padding-top:10px;font-size:11px;color:#aab;font-family:monospace}</style></head><body>'+
-      '<h1>'+r.name+' &nbsp;<span class="chip">'+z.name+'</span></h1>'+
+      '<h1>'+escapeHtml(r.name)+' &nbsp;<span class="chip">'+z.name+'</span></h1>'+
       '<p class="sub">qPEG valuation · CMP '+money(r.cmp)+' · '+when+'</p>'+
       '<div class="fv"><div><div class="l">Avg fair value</div><div class="b">'+money(r.avgFair)+'</div></div>'+
       '<div><div class="l">Current price</div><div class="b">'+money(r.cmp)+'</div></div>'+
@@ -745,6 +895,7 @@
       if(o[c]){ var els=document.querySelectorAll('.'+c); o[c].forEach(function(v,i){ if(els[i]) els[i].value=v; }); }
     });
     render();
+    if(typeof onStockInputsApplied === 'function') onStockInputsApplied();
   }
 
   // ---------- wire up ----------
@@ -788,6 +939,373 @@
   });
 
   render();
+
+  // ========== persistent library and optional Supabase cloud sync ==========
+  var LOCAL_KEY='qpeg-stock-library-v2', CFG_KEY='qpeg-supabase-public-config-v2';
+  var SEED_PAYLOAD={"name":"Caplin Point Labs","ccy":"₹","y0":"FY23","y1":"FY24","y2":"FY25","moat":"switching","cmp":"2475","dyield":"0.25","epsCur":"93.5","epsFwd":"108","years":"1","roic":"19.91","h":"13","Tused":"11","ebitda":["5.41","6.41","7.61"],"ebit":["4.87","5.75","6.88"],"capex":["3.64","3.87","6.46"],"wc":["1.39","1.22","1.09"],"roicHist":["18.6","19.3","19.91"],"tax":["18","20","19"]};
+  var localRecords=[], cloudRecords=[], libraryMode='local';
+  var dbClient=null, cloudSession=null, activeId=null, lastSavedData=null, openingStock=false, editedDraft=false;
+  var cloudBusy=false;
+
+  function uid(){
+    if(window.crypto && window.crypto.randomUUID) return window.crypto.randomUUID();
+    return 'q'+Date.now().toString(36)+Math.random().toString(36).slice(2);
+  }
+  function nameKey(name){ return String(name||'').trim().replace(/\s+/g,' ').toLocaleLowerCase(); }
+  function cleanData(raw){
+    if(!raw || typeof raw!=='object' || Array.isArray(raw)) throw Error('Not a stock data object');
+    var o={}, ids=TEXT_IDS.concat(NUM_IDS);
+    ids.forEach(function(id){ o[id]=(raw[id]===undefined || raw[id]===null)?'':String(raw[id]); });
+    ARR_CLS.forEach(function(c){
+      var a=raw[c]; o[c]=[0,1,2].map(function(i){return Array.isArray(a) && a[i]!==undefined && a[i]!==null? String(a[i]):'';});
+    });
+    o.name=o.name.trim();
+    if(!o.name || o.name.length>150) throw Error('Stock name is missing or too long (max 150 characters)');
+    return o;
+  }
+  function currentRecords(){return libraryMode==='cloud'?cloudRecords:localRecords;}
+  function setLocalRecords(items){
+    try{localStorage.setItem(LOCAL_KEY,JSON.stringify(items));localRecords=items;return true;}
+    catch(e){notifyLibrary('Could not save locally: browser storage might be full or disabled.',true);return false;}
+  }
+  function readLocal(){
+    try{
+      var stored=localStorage.getItem(LOCAL_KEY);
+      if(stored===null){
+        setLocalRecords([{id:uid(),name:SEED_PAYLOAD.name,name_key:nameKey(SEED_PAYLOAD.name),payload:cleanData(SEED_PAYLOAD),updated_at:new Date().toISOString()}]);
+      } else {
+        var a=JSON.parse(stored);localRecords=Array.isArray(a)?a.filter(function(r){return r && r.payload && r.name;}):[];
+      }
+    }catch(e){localRecords=[];notifyLibrary('Local library could not be read. You can import a backup.',true);}
+  }
+  function setSaveMessage(message,dirty){$('saveMessage').textContent=message;$('saveMessage').classList.toggle('dirty',!!dirty);}
+  function notifyLibrary(message,bad){$('libraryMessage').textContent=message;$('libraryMessage').style.color=bad?'var(--bad)':'var(--muted)';}
+  function notifyCloud(message,type){$('sbStatus').textContent=message;$('sbStatus').className='cloud-state'+(type?' '+type:'');}
+  function isDirty(){return activeId!==null && lastSavedData!==null && JSON.stringify(gather())!==lastSavedData;}
+  function canDiscard(){return !isDirty() || confirm('This stock has unsaved changes. Discard them and open another stock?');}
+  function refreshSaveMessage(){
+    if(activeId!==null) setSaveMessage(isDirty()?'Unsaved changes — click Save to library.':'Saved in '+(libraryMode==='cloud'?'cloud':'local')+' library.',isDirty());
+    else setSaveMessage(editedDraft?'Unsaved draft — click Save to library.':'New stock or imported file — save to library to keep it.',editedDraft);
+  }
+  function onStockInputsApplied(){
+    if(openingStock) return;
+    activeId=null;lastSavedData=null;editedDraft=true;refreshSaveMessage();
+  }
+  function switchView(view){
+    ['valuer','library','cloud'].forEach(function(v){
+      $('view'+v.charAt(0).toUpperCase()+v.slice(1)).hidden=v!==view;
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('[data-view]'),function(el){
+      var active=el.getAttribute('data-view')===view;el.classList.toggle('active',active);el.setAttribute('aria-current',active?'page':'false');
+    });
+    if(view==='library') renderLibrary();
+    if(view==='valuer') {$('quickFind').value='';$('quickResults').hidden=true;}
+  }
+  function setLibraryMode(mode){
+    if(mode==='cloud' && !cloudSession){notifyCloud('Sign in first to use the cloud library.','error');switchView('cloud');return;}
+    if(mode===libraryMode) {renderLibrary();return;}
+    if(!canDiscard()) return;
+    libraryMode=mode;activeId=null;lastSavedData=null;editedDraft=true;
+    $('modeLabel').textContent=mode==='cloud'?'CLOUD LIBRARY':'LOCAL LIBRARY';
+    $('refreshCloudBtn').hidden=mode!=='cloud';refreshSaveMessage();renderLibrary();renderQuickResults();
+  }
+  function openRecord(record){
+    if(!canDiscard()) return;
+    openingStock=true;try{apply(cleanData(record.payload));}finally{openingStock=false;}
+    activeId=record.id;lastSavedData=JSON.stringify(gather());editedDraft=false;
+    refreshSaveMessage();switchView('valuer');
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  function openById(id){var record=currentRecords().find(function(r){return r.id===id;});if(record)openRecord(record);}
+  function newStock(){
+    if(!canDiscard()) return;
+    activeId=null;lastSavedData=null;editedDraft=false;
+    ['name','cmp','dyield','epsCur','epsFwd','roic','h'].forEach(function(id){$(id).value='';});
+    Array.prototype.forEach.call(document.querySelectorAll('table.hist tbody input'),function(el){el.value='';});
+    $('years').value='2';$('moat').value='none';$('Tused').value='7';render();refreshSaveMessage();switchView('valuer');$('name').focus();
+  }
+  async function saveStock(){
+    var data;try{data=cleanData(gather());}catch(e){alert(e.message);return;}
+    var key=nameKey(data.name), existing=currentRecords().find(function(r){return r.name_key===key && r.id!==activeId;});
+    var me=currentRecords().find(function(r){return r.id===activeId;});
+    if(existing && me){alert('Another stock with this name already exists. Choose a different name or open that record.');return;}
+    if(existing && !me && !confirm('"'+data.name+'" is already in this library. Update the existing stock?')) return;
+    if(libraryMode==='local'){
+      var id=(me||existing||{}).id || uid(), now=new Date().toISOString();
+      var rec={id:id,name:data.name,name_key:key,payload:data,updated_at:now};
+      var list=localRecords.filter(function(r){return r.id!==id;}).concat([rec]);
+      if(!setLocalRecords(list))return;
+      activeId=id;lastSavedData=JSON.stringify(gather());editedDraft=false;refreshSaveMessage();renderLibrary();renderQuickResults();
+    }else{
+      if(!dbClient || !cloudSession){notifyCloud('Cloud session is not connected. Sign in again.','error');return;}
+      $('saveStock').disabled=true;$('saveStock').textContent='Saving…';
+      try{
+        var row={name:data.name,name_key:key,payload:data},res;
+        var target=me||existing;
+        if(target)res=await dbClient.from('qpeg_stocks').update(row).eq('id',target.id).select('id,name,name_key,payload,updated_at').single();
+        else res=await dbClient.from('qpeg_stocks').insert(Object.assign({user_id:cloudSession.user.id},row)).select('id,name,name_key,payload,updated_at').single();
+        if(res.error)throw res.error;
+        cloudRecords=cloudRecords.filter(function(r){return r.id!==res.data.id;}).concat([res.data]);
+        activeId=res.data.id;lastSavedData=JSON.stringify(gather());editedDraft=false;
+        refreshSaveMessage();renderLibrary();renderQuickResults();notifyCloud('Saved "'+data.name+'" to the cloud.','success');
+      }catch(e){alert('Cloud save failed: '+(e.message||e));}
+      finally{$('saveStock').disabled=false;$('saveStock').textContent='Save to library';}
+    }
+  }
+  async function deleteRecord(id){
+    var rec=currentRecords().find(function(r){return r.id===id;});if(!rec)return;
+    if(!confirm('Permanently delete "'+rec.name+'" from the '+libraryMode+' library?'))return;
+    if(libraryMode==='local'){
+      if(!setLocalRecords(localRecords.filter(function(r){return r.id!==id;})))return;
+    }else{
+      if(!dbClient || !cloudSession)return;
+      var res=await dbClient.from('qpeg_stocks').delete().eq('id',id);
+      if(res.error){alert('Cloud delete failed: '+res.error.message);return;}
+      cloudRecords=cloudRecords.filter(function(r){return r.id!==id;});
+    }
+    if(activeId===id){activeId=null;lastSavedData=null;editedDraft=true;refreshSaveMessage();}
+    renderLibrary();renderQuickResults();notifyLibrary('Deleted "'+rec.name+'".');
+  }
+  function priceStr(x,c){return isFinite(x)?String(c||'')+fmt(x,0):'—';}
+  function previewStock(p){
+    try{
+      var v=function(k){return parseFloat(p[k]);}, cmp=v('cmp'), eps=v('epsCur'), fwd=v('epsFwd'), years=v('years'), roic=v('roic'), h=v('h'), div=v('dyield'), T=v('Tused');
+      var cls=['ebitda','ebit','capex','tax'],hist={};
+      cls.forEach(function(c){hist[c]=(p[c]||[]).map(function(x){return parseFloat(x);});});
+      if(![cmp,eps,fwd,years,roic,h,div,T].every(isFinite)||cmp<=0||eps<=0||fwd<=0||years<=0||roic<=0||h<=0||T<=0||cls.some(function(c){return hist[c].length!==3||!hist[c].every(isFinite);}))return null;
+      var wc=(p.wc||[]).map(function(x){var t=parseFloat(x);return isFinite(t)?t:0;});
+      var rr=[];
+      for(var i=0;i<3;i++){
+        var denom=hist.ebit[i]*(1-hist.tax[i]/100);
+        var rate=(hist.capex[i]+(wc[i]||0)+hist.ebit[i]-hist.ebitda[i])/denom;
+        if(isFinite(rate))rr.push(rate);
+      }
+      if(!rr.length)return null;
+      var RR=sum(rr)/rr.length, gp=(Math.pow(fwd/eps,1/years)-1)*100, gy=gp+div;
+      var rd=roic/100,hd=h/100,gR=RR*rd,pvf=0,Tn=Math.max(1,Math.round(T));
+      for(var t=1;t<=Tn;t++)pvf+=(1-(t-1)/Tn)*Math.pow(1+gR,t-1)/Math.pow(1+hd,t);
+      var Mq=Math.max(1+(rd-hd)*pvf,0.05), lr=Math.log(rd/hd);
+      var expo=(Math.abs(rd-hd)<1e-9||!isFinite(lr)||Math.abs(lr)<1e-9)?0:Math.log(Mq)/lr;
+      var M=Math.pow(hd/rd,expo),q=(cmp/eps)/gy*M, fair=1.125*gy*eps/M;
+      if(![q,fair,M].every(isFinite)||gy<=0||fair<=0)return null;
+      return {cmp:cmp,fair:fair,q:q,upside:(fair/cmp-1)*100,zone:zoneOf(q).name};
+    }catch(e){return null;}
+  }
+  function dateStr(value){var d=new Date(value);return isFinite(d.getTime())?d.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'}):'—';}
+  function addCell(tr,value,className){var td=document.createElement('td');if(className)td.className=className;td.textContent=value;tr.appendChild(td);return td;}
+  function renderLibrary(){
+    var recs=currentRecords(), summaries=new Map();
+    recs.forEach(function(r){summaries.set(r.id,previewStock(r.payload));});
+    $('navCount').textContent='('+recs.length+')';$('statCount').textContent=recs.length;
+    $('statUnder').textContent=recs.filter(function(r){var s=summaries.get(r.id);return s && s.zone==='Undervalued';}).length;
+    $('statBuy').textContent=recs.filter(function(r){var s=summaries.get(r.id);return s && s.zone==='GARP buy';}).length;
+    $('statOther').textContent=recs.filter(function(r){var s=summaries.get(r.id);return s && (s.zone==='Fair'||s.zone==='Expensive');}).length;
+    var search=nameKey($('libSearch').value), filter=$('libFilter').value, sort=$('libSort').value;
+    var rows=recs.filter(function(r){
+      var s=summaries.get(r.id);return nameKey(r.name).includes(search) && (filter==='all'||(filter==='incomplete'?!s:!!s&&s.zone===filter));
+    }).slice();
+    rows.sort(function(a,b){
+      var sa=summaries.get(a.id),sb=summaries.get(b.id);
+      if(sort==='newest')return new Date(b.updated_at)-new Date(a.updated_at);
+      if(sort==='qpeg')return (sa?sa.q:Infinity)-(sb?sb.q:Infinity);
+      if(sort==='upside')return (sb?sb.upside:-Infinity)-(sa?sa.upside:-Infinity);
+      return String(a.name).localeCompare(String(b.name));
+    });
+    var tbody=$('stockRows');tbody.replaceChildren();
+    if(!rows.length){var er=document.createElement('tr'),cell=addCell(er,recs.length?'No stocks match your search or filter.':'No stocks yet. Save one from the Valuer or import JSON files.','empty-row');cell.colSpan=8;tbody.appendChild(er);return;}
+    rows.forEach(function(r){
+      var s=summaries.get(r.id),tr=document.createElement('tr');
+      addCell(tr,r.name);addCell(tr,s?priceStr(s.cmp,r.payload.ccy):'—','numeric');
+      addCell(tr,s?priceStr(s.fair,r.payload.ccy):'—','numeric');
+      addCell(tr,s?(s.upside>=0?'+':'')+fmt(s.upside,1)+'%':'—','numeric');
+      addCell(tr,s?fmt(s.q,2):'—','numeric');
+      var zone=addCell(tr,'');var pill=document.createElement('span');pill.className='pillzone';pill.textContent=s?s.zone:'Incomplete';
+      if(s){pill.style.color=s.zone==='Undervalued'?'var(--z-under)':s.zone==='GARP buy'?'var(--z-buy)':s.zone==='Fair'?'var(--z-fair)':'var(--z-exp)';}
+      zone.appendChild(pill);addCell(tr,dateStr(r.updated_at));
+      var tools=addCell(tr,'','tools');
+      var open=document.createElement('button');open.type='button';open.className='mini-btn';open.textContent='Open';open.addEventListener('click',function(){openById(r.id);});tools.appendChild(open);
+      var del=document.createElement('button');del.type='button';del.className='mini-btn danger';del.textContent='Delete';del.addEventListener('click',function(){deleteRecord(r.id);});tools.appendChild(del);
+      tbody.appendChild(tr);
+    });
+  }
+  function renderQuickResults(){
+    var term=nameKey($('quickFind').value),box=$('quickResults');box.replaceChildren();
+    if(!term){box.hidden=true;return;}
+    var matches=currentRecords().filter(function(r){return nameKey(r.name).includes(term);}).slice(0,8);
+    if(!matches.length){var line=document.createElement('div');line.className='muted-copy';line.style.padding='11px';line.textContent='No matching stock. Open the library to import one or create a new stock.';box.appendChild(line);box.hidden=false;return;}
+    matches.forEach(function(r){
+      var b=document.createElement('button');b.type='button';var name=document.createElement('strong');name.textContent=r.name;
+      var info=document.createElement('span');info.className='small';var s=previewStock(r.payload);info.textContent=s?'qPEG '+fmt(s.q,2)+' · '+s.zone:'Incomplete';
+      b.appendChild(name);b.appendChild(info);b.addEventListener('click',function(){openById(r.id);});box.appendChild(b);
+    });box.hidden=false;
+  }
+  function normalizeImport(value){
+    var items=Array.isArray(value)?value:value&&Array.isArray(value.stocks)?value.stocks:[value];
+    return items.map(function(item){return cleanData(item && (item.payload||item.data||item));});
+  }
+  function importLocal(items){
+    var merged=localRecords.slice(),updated=0,added=0;
+    items.forEach(function(p){
+      var key=nameKey(p.name),idx=merged.findIndex(function(r){return r.name_key===key;});
+      var rec={id:idx>=0?merged[idx].id:uid(),name:p.name,name_key:key,payload:p,updated_at:new Date().toISOString()};
+      if(idx>=0){merged[idx]=rec;updated++;}else{merged.push(rec);added++;}
+    });
+    if(!setLocalRecords(merged))throw Error('Browser storage refused the imported data');
+    return {added:added,updated:updated};
+  }
+  async function importCloud(items){
+    if(!dbClient||!cloudSession)throw Error('Sign in to your cloud database first');
+    var unique=new Map();items.forEach(function(p){unique.set(nameKey(p.name),p);});
+    var list=Array.from(unique.values()),count=0;
+    for(var start=0;start<list.length;start+=100){
+      var batch=list.slice(start,start+100).map(function(p){return {user_id:cloudSession.user.id,name:p.name,name_key:nameKey(p.name),payload:p};});
+      var res=await dbClient.from('qpeg_stocks').upsert(batch,{onConflict:'user_id,name_key'});
+      if(res.error)throw res.error;count+=batch.length;
+    }
+    await refreshCloud();return count;
+  }
+  async function handleLibraryImport(files){
+    var items=[],failed=[];
+    for(var i=0;i<files.length;i++){
+      try{var j=JSON.parse(await files[i].text());items=items.concat(normalizeImport(j));}
+      catch(e){failed.push(files[i].name+': '+e.message);}
+    }
+    if(!items.length){notifyLibrary('No valid stocks imported. '+failed.join(' | '),true);return;}
+    try{
+      var message;
+      if(libraryMode==='local'){var result=importLocal(items);message=result.added+' added, '+result.updated+' updated locally.';}
+      else{var count=await importCloud(items);message=count+' unique names uploaded to Supabase.';}
+      if(failed.length)message+=' '+failed.length+' file(s) failed: '+failed.join(' | ');
+      notifyLibrary(message,failed.length>0);renderLibrary();renderQuickResults();
+    }catch(e){notifyLibrary('Import failed: '+(e.message||e),true);}
+  }
+  function exportLibrary(){
+    var backup={format:'qpeg-stock-library',version:2,exported_at:new Date().toISOString(),stocks:currentRecords().map(function(r){return {name:r.name,payload:r.payload,updated_at:r.updated_at};})};
+    download('qPEG_'+libraryMode+'_library_backup.json',JSON.stringify(backup,null,2),'application/json');
+    notifyLibrary('Full library backup exported: '+backup.stocks.length+' stocks.');
+  }
+  function applyCloudStatus(){
+    $('sbSignedOut').hidden=!!cloudSession;$('sbSignedIn').hidden=!cloudSession;
+    $('sbUser').textContent=cloudSession && cloudSession.user?cloudSession.user.email:'';
+    $('sbCopyLocal').disabled=!cloudSession||!localRecords.length;
+  }
+  async function loadSupabaseSdk(){
+    if(window.supabase&&window.supabase.createClient)return;
+    await new Promise(function(resolve,reject){
+      var s=document.createElement('script');
+      s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js';
+      s.onload=resolve;s.onerror=function(){reject(Error('Cannot load Supabase JavaScript SDK. Check connectivity or the CDN.'));};
+      document.head.appendChild(s);
+    });
+    if(!window.supabase||!window.supabase.createClient)throw Error('Supabase SDK unavailable');
+  }
+  function configureClient(url,key){
+    if(!window.supabase||!window.supabase.createClient)throw Error('Supabase library failed to load. Check your connection, reload, and try again.');
+    var u=new URL(url);if(u.protocol!=='https:')throw Error('Use an HTTPS Supabase project URL.');
+    if(!key||key.length<20)throw Error('Enter your Supabase publishable or anon key.');
+    if(key.includes('service_role')||key.startsWith('sb_secret_'))throw Error('Never use a secret or service_role key in the browser.');
+    dbClient=window.supabase.createClient(u.origin,key,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:false}});
+    try{localStorage.setItem(CFG_KEY,JSON.stringify({url:u.origin,key:key}));}catch(e){}
+    return dbClient;
+  }
+  async function connectCloud(quiet){
+    try{
+      var url=$('sbUrl').value.trim(),key=$('sbKey').value.trim();
+      await loadSupabaseSdk();configureClient(url,key);
+      var result=await dbClient.auth.getSession();if(result.error)throw result.error;
+      cloudSession=result.data.session;applyCloudStatus();
+      if(cloudSession){
+        await refreshCloud();setLibraryMode('cloud');
+        notifyCloud('Connected. '+cloudRecords.length+' cloud stock(s) loaded.','success');
+      }else if(!quiet)notifyCloud('Project configured. Sign in below to access your cloud library.');
+    }catch(e){cloudSession=null;applyCloudStatus();if(!quiet)notifyCloud('Connection error: '+(e.message||e),'error');}
+  }
+  async function refreshCloud(){
+    if(!dbClient||!cloudSession)throw Error('Not signed in');
+    var rows=[],offset=0;
+    while(true){
+      var res=await dbClient.from('qpeg_stocks').select('id,name,name_key,payload,updated_at').order('name',{ascending:true}).range(offset,offset+999);
+      if(res.error)throw res.error;
+      rows=rows.concat(res.data||[]);
+      if(!res.data||res.data.length<1000)break;
+      offset+=1000;
+    }
+    cloudRecords=rows;renderLibrary();renderQuickResults();return rows.length;
+  }
+  async function cloudLogin(signUp){
+    if(!dbClient){notifyCloud('Connect your project first.','error');return;}
+    var email=$('sbEmail').value.trim(),password=$('sbPassword').value;
+    if(!email||!password){notifyCloud('Enter your email and password.','error');return;}
+    if(cloudBusy)return;cloudBusy=true;
+    try{
+      var result=signUp?await dbClient.auth.signUp({email:email,password:password}):await dbClient.auth.signInWithPassword({email:email,password:password});
+      if(result.error)throw result.error;
+      $('sbPassword').value='';
+      if(!result.data.session){notifyCloud('Account created. Confirm your email if requested, then sign in.','success');return;}
+      cloudSession=result.data.session;applyCloudStatus();await refreshCloud();setLibraryMode('cloud');
+      notifyCloud('Signed in. '+cloudRecords.length+' cloud stock(s) available.','success');
+    }catch(e){notifyCloud((signUp?'Sign-up':'Sign-in')+' failed: '+(e.message||e),'error');}
+    finally{cloudBusy=false;}
+  }
+  async function cloudLogout(){
+    if(!dbClient)return;
+    // Do not silently lose changes to a cloud record during sign-out.
+    if(libraryMode==='cloud'){
+      setLibraryMode('local');
+      if(libraryMode!=='local'){notifyCloud('Sign-out cancelled: there are unsaved changes.');return;}
+    }
+    try{var res=await dbClient.auth.signOut();if(res.error)throw res.error;}
+    catch(e){notifyCloud('Sign-out failed: '+e.message,'error');return;}
+    cloudSession=null;cloudRecords=[];applyCloudStatus();notifyCloud('Signed out. Using your local library.');
+  }
+  async function migrateLocal(){
+    if(!localRecords.length){notifyCloud('No local stocks to copy.');return;}
+    if(!cloudSession){notifyCloud('Sign in first.','error');return;}
+    if(!confirm('Copy '+localRecords.length+' local stock(s) to the cloud? Matching names in the cloud will be updated.'))return;
+    try{
+      var count=await importCloud(localRecords.map(function(r){return cleanData(r.payload);}));
+      setLibraryMode('cloud');notifyCloud(count+' local stock(s) copied to the cloud.','success');
+    }catch(e){notifyCloud('Cloud copy failed: '+e.message,'error');}
+  }
+
+  // Navigation, search, library management
+  Array.prototype.forEach.call(document.querySelectorAll('[data-view]'),function(btn){btn.addEventListener('click',function(){switchView(btn.getAttribute('data-view'));});});
+  $('quickBrowse').addEventListener('click',function(){switchView('library');});
+  $('quickFind').addEventListener('input',renderQuickResults);
+  $('quickFind').addEventListener('keydown',function(e){
+    if(e.key==='Escape')$('quickResults').hidden=true;
+    if(e.key==='Enter'){var term=nameKey(e.target.value),rec=currentRecords().find(function(r){return nameKey(r.name).includes(term);});if(term&&rec)openRecord(rec);}
+  });
+  document.addEventListener('input',function(e){if(e.target.closest && e.target.closest('.inputs')){editedDraft=true;refreshSaveMessage();}});
+  document.addEventListener('change',function(e){if(e.target.closest && e.target.closest('.inputs')){editedDraft=true;refreshSaveMessage();}});
+  $('resetT').addEventListener('click',function(){editedDraft=true;refreshSaveMessage();});
+  $('clearAll').addEventListener('click',function(){
+    // Original Clear handler asks for confirmation. Only detach a record when its fields were actually cleared.
+    if(!$('name').value){activeId=null;lastSavedData=null;editedDraft=false;refreshSaveMessage();}
+  });
+  $('saveStock').addEventListener('click',saveStock);
+  $('libNew').addEventListener('click',newStock);
+  ['libSearch','libFilter','libSort'].forEach(function(id){$(id).addEventListener(id==='libSearch'?'input':'change',renderLibrary);});
+  $('importLibraryBtn').addEventListener('click',function(){$('libraryImportInput').click();});
+  $('libraryImportInput').addEventListener('change',async function(e){var files=Array.from(e.target.files||[]);e.target.value='';if(files.length)await handleLibraryImport(files);});
+  $('exportLibraryBtn').addEventListener('click',exportLibrary);
+  $('refreshCloudBtn').addEventListener('click',async function(){
+    try{var count=await refreshCloud();notifyLibrary('Cloud library refreshed: '+count+' stock(s).');}
+    catch(e){notifyLibrary('Cloud refresh failed: '+e.message,true);}
+  });
+  $('sbConnect').addEventListener('click',function(){connectCloud(false);});
+  $('sbSignIn').addEventListener('click',function(){cloudLogin(false);});
+  $('sbSignUp').addEventListener('click',function(){cloudLogin(true);});
+  $('sbSignOut').addEventListener('click',cloudLogout);
+  $('sbUseCloud').addEventListener('click',function(){setLibraryMode('cloud');switchView('library');});
+  $('sbUseLocal').addEventListener('click',function(){setLibraryMode('local');switchView('library');});
+  $('sbCopyLocal').addEventListener('click',migrateLocal);
+
+  readLocal();renderLibrary();refreshSaveMessage();applyCloudStatus();
+  try{
+    var cfg=JSON.parse(localStorage.getItem(CFG_KEY)||'null');
+    if(cfg && cfg.url && cfg.key){$('sbUrl').value=cfg.url;$('sbKey').value=cfg.key;connectCloud(true);}
+  }catch(e){}
 })();
 </script>
 </body>
