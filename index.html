@@ -1101,7 +1101,7 @@
       return String(a.name).localeCompare(String(b.name));
     });
     var tbody=$('stockRows');tbody.replaceChildren();
-    if(!rows.length){var er=document.createElement('tr'),cell=addCell(er,recs.length?'No stocks match your search or filter.':'No stocks yet. Save one from the Valuer or import JSON files.','empty-row');cell.colSpan=8;tbody.appendChild(er);return;}
+    if(!rows.length){var er=document.createElement('tr'),cell=addCell(er,recs.length?'No stocks match your search or filter.':'No stocks yet. Save one from the Valuer or import JSON files.','empty-row');cell.colSpan=7;tbody.appendChild(er);return;}
     rows.forEach(function(r){
       var s=summaries.get(r.id),tr=document.createElement('tr');
       addCell(tr,r.name);addCell(tr,s?priceStr(s.cmp,r.payload.ccy):'—','numeric');
@@ -1110,7 +1110,7 @@
       addCell(tr,s?fmt(s.q,2):'—','numeric');
       var zone=addCell(tr,'');var pill=document.createElement('span');pill.className='pillzone';pill.textContent=s?s.zone:'Incomplete';
       if(s){pill.style.color=s.zone==='Undervalued'?'var(--z-under)':s.zone==='GARP buy'?'var(--z-buy)':s.zone==='Fair'?'var(--z-fair)':'var(--z-exp)';}
-      zone.appendChild(pill);addCell(tr,dateStr(r.updated_at));
+      zone.appendChild(pill);
       var tools=addCell(tr,'','tools');
       var open=document.createElement('button');open.type='button';open.className='mini-btn';open.textContent='Open';open.addEventListener('click',function(){openById(r.id);});tools.appendChild(open);
       var del=document.createElement('button');del.type='button';del.className='mini-btn danger';del.textContent='Delete';del.addEventListener('click',function(){deleteRecord(r.id);});tools.appendChild(del);
