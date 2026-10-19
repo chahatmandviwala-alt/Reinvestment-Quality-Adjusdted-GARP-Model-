@@ -300,13 +300,13 @@
           </div>
           <div class="field">
             <label for="ccy">Currency</label>
-            <input type="text" id="ccy" value="₹" maxlength="3" autocomplete="off">
+            <input type="text" id="ccy" value="$" maxlength="3" autocomplete="off">
           </div>
         </div>
         <div class="row2">
           <div class="field">
             <label for="cmp">Current price (CMP)</label>
-            <input type="number" id="cmp" value="2450" step="any">
+            <input type="number" id="cmp" value="245" step="any">
           </div>
           <div class="field">
             <label for="dyield">Dividend yield <span class="hint">%</span></label>
@@ -316,11 +316,11 @@
         <div class="row3">
           <div class="field">
             <label for="epsCur">EPS — current yr</label>
-            <input type="number" id="epsCur" value="100" step="any">
+            <input type="number" id="epsCur" value="10" step="any">
           </div>
           <div class="field">
             <label for="epsFwd">EPS — fwd yr</label>
-            <input type="number" id="epsFwd" value="133.54" step="any">
+            <input type="number" id="epsFwd" value="13" step="any">
           </div>
           <div class="field">
             <label for="years">Yrs apart</label>
@@ -334,11 +334,11 @@
         <div class="row2 align-end">
           <div class="field">
             <label for="roic">ROIC — current yr <span class="hint">%</span></label>
-            <input type="number" id="roic" value="19.91" step="any">
+            <input type="number" id="roic" value="18" step="any">
           </div>
           <div class="field">
             <label for="h">Hurdle h <span class="hint">% (cost of capital)</span></label>
-            <input type="number" id="h" value="11.5" step="any">
+            <input type="number" id="h" value="10" step="any">
           </div>
         </div>
       </div>
@@ -372,9 +372,9 @@
               <td><input type="number" class="wc" value="120" step="any"></td>
               <td><input type="number" class="wc" value="130" step="any"></td></tr>
             <tr><th>ROIC %</th>
-              <td><input type="number" class="roicHist" value="18.6" step="any"></td>
-              <td><input type="number" class="roicHist" value="19.3" step="any"></td>
-              <td><input type="number" class="roicHist" value="19.91" step="any"></td></tr>
+              <td><input type="number" class="roicHist" value="18.5" step="any"></td>
+              <td><input type="number" class="roicHist" value="19" step="any"></td>
+              <td><input type="number" class="roicHist" value="20" step="any"></td></tr>
             <tr><th>Tax rate %</th>
               <td><input type="number" class="tax" value="24" step="any"></td>
               <td><input type="number" class="tax" value="25" step="any"></td>
@@ -389,9 +389,9 @@
         <div class="field">
           <label for="moat">Economic moat <span class="hint">sets the fade period T; "none" uses the 3-yr trend</span></label>
           <select id="moat">
-            <option value="none" selected>None — use 3-yr ROIC trend</option>
+            <option value="none">None — use 3-yr ROIC trend</option>
             <option value="nomoat">No moat</option>
-            <option value="cost">Cost advantage</option>
+            <option value="cost" selected>Cost advantage</option>
             <option value="intangible">Brand / intangibles / licences</option>
             <option value="switching">Switching costs</option>
             <option value="scale">Efficient scale</option>
