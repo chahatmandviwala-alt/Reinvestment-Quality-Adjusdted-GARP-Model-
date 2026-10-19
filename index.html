@@ -514,8 +514,8 @@
         <div class="actions">
           <button class="btn" id="saveStock" type="button">Save to library</button>
           <button class="btn ghost" id="dlReport" type="button">Download report</button>
-          <button class="btn ghost" id="saveJson" type="button">Export</button>
-          <button class="btn ghost" id="loadJsonBtn" type="button">Load</button>
+          <button class="btn ghost" id="saveJson" type="button">Export stock</button>
+          <button class="btn ghost" id="loadJsonBtn" type="button">Load stock</button>
           <button class="btn ghost" id="clearAll" type="button">Clear</button>
           <input type="file" id="loadJson" class="filein" accept="application/json">
         </div>
@@ -554,11 +554,11 @@
     <div class="tablewrap"><table class="stocktable" aria-label="Saved stocks"><thead><tr><th>Stock</th><th class="numeric">Price</th><th class="numeric">Fair value</th><th class="numeric">Upside</th><th class="numeric">qPEG</th><th>Zone</th><th>Updated</th><th class="tools">Actions</th></tr></thead><tbody id="stockRows"></tbody></table></div>
     <div class="libtools">
       <h3>Import, backup &amp; transfer</h3>
-      <div class="muted-copy">Import one or more existing single-stock JSON files, or a previously exported full-library backup. Stocks with matching names are updated. Export the whole collection as one JSON backup.</div>
+      <div class="muted-copy">Import existing single stock JSON files, or a full library backup. Stocks with matching names are updated. Export the whole collection as one JSON backup.</div>
       <div class="actions">
-        <button class="btn" id="importLibraryBtn" type="button">Import JSON files</button>
-        <button class="btn ghost" id="exportLibraryBtn" type="button">Export full library</button>
-        <button class="btn ghost" id="refreshCloudBtn" type="button" hidden>Refresh from cloud</button>
+        <button class="btn" id="importLibraryBtn" type="button">Import stock(s)</button>
+        <button class="btn ghost" id="exportLibraryBtn" type="button">Export library</button>
+        <button class="btn ghost" id="refreshCloudBtn" type="button" hidden>Refresh</button>
         <input class="filein" id="libraryImportInput" type="file" accept=".json,application/json" multiple>
       </div>
       <p class="save-message" id="libraryMessage" role="status"></p>
@@ -582,7 +582,7 @@
     </div>
   </section>
 
-  <footer class="foot">qPEG valuation &amp; stock library · Supabase Cloud Database · Sign in to create your private stock library</footer>
+  <footer class="foot">qPEG Valuation &amp; Stock Library · Supabase Cloud Database</footer>
 </div>
 
 <script>
