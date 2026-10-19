@@ -389,13 +389,13 @@
               <td><input type="number" class="tax" value="25" step="any"></td></tr>
           </tbody>
         </table>
-        <p class="unit-note">Enter the cash rows (EBITDA, EBIT, capex, change in WC) in any one consistent unit, since they are used only as ratios. ROIC and tax are percentages, oldest year on the left. The reinvestment rate each year is <b>(capex + ΔWC + EBIT − EBITDA) ÷ (EBIT × (1 − tax))</b>, averaged over the three years; since <b>EBIT − EBITDA = −D&amp;A</b>, the numerator is net reinvestment and the denominator is NOPAT. <b>Change in WC</b> is the extra cash tied up as the business grows (negative if it fell). The three ROIC figures set the suggested T, so keep the latest one consistent with the headline ROIC above.</p>
+        <p class="unit-note">Enter the cash rows (EBITDA, EBIT, capex, change in WC) in any one consistent unit. ROIC and tax are percentages, oldest year on the left. The reinvestment rate each year is <b>(capex + ΔWC + EBIT − EBITDA) ÷ (EBIT × (1 − tax))</b>, averaged over the three years; since <b>EBIT − EBITDA = −D&amp;A</b>, the numerator is net reinvestment and the denominator is NOPAT. <b>Change in WC</b> is the extra cash tied up as the business grows (negative if it fell). The three ROIC figures set the suggested T, so keep the latest one consistent with the headline ROIC above.</p>
       </div>
 
       <div class="panel">
         <p class="eyebrow">Moat, fade &amp; exponent</p>
         <div class="field">
-          <label for="moat">Economic moat <span class="hint">sets the fade period T; "none" uses the 3-yr trend</span></label>
+          <label for="moat">Economic moat</label>
           <select id="moat">
             <option value="none">None — use 3-yr ROIC trend</option>
             <option value="nomoat">No moat</option>
