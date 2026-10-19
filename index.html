@@ -281,7 +281,7 @@
     <section class="library-launch" aria-label="Stock search">
       <label for="quickFind">Open an existing stock</label>
       <div class="launchrow">
-        <input type="text" id="quickFind" placeholder="Search your library by company name…" autocomplete="off">
+        <input type="text" id="quickFind" placeholder="Search library" autocomplete="off">
         <button class="btn ghost" id="quickBrowse" type="button">Browse all</button>
       </div>
       <div class="quick-results" id="quickResults" hidden></div>
@@ -966,7 +966,7 @@
   function canDiscard(){return !isDirty() || confirm('This stock has unsaved changes. Discard them and open another stock?');}
   function refreshSaveMessage(){
     if(activeId!==null) setSaveMessage(isDirty()?'Unsaved changes — click Save to library.':'Saved in '+(libraryMode==='cloud'?'cloud':'local')+' library.',isDirty());
-    else setSaveMessage(editedDraft?'Unsaved draft — click Save to library.':'New stock or imported file — save to library to keep it.',editedDraft);
+    else setSaveMessage(editedDraft?'Unsaved draft — click Save to library.':'New stock — save to library to keep it.',editedDraft);
   }
   function onStockInputsApplied(){
     if(openingStock) return;
